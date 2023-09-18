@@ -10,7 +10,7 @@ public class Tests {
     private static final Logger LOGGER = LoggerFactory.getLogger(Tests.class);
     @Test
     public void startingTests() {
-        System.out.println("Running Tests");
+
     }
 
 }
