@@ -2,14 +2,11 @@
 // @Auth v0ncent
 package JDate;
 
-import JDate.Characters.Character;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class JDate {
     /** Instance of logger for JDate class*/
@@ -27,12 +24,11 @@ public class JDate {
     private final double userScreenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     /** Height of user's primary screen */
     private final double userScreenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+    /**Window Icon **/
+    private final Image icon;
 
     /** If the JFrame window is visible or not */
     private boolean isVisible;
-
-    /**List of all game characters*/
-    private final ArrayList<Character> characters = new ArrayList<>();
 
     /**
      * Creates a JDate object called the given title.
@@ -40,7 +36,7 @@ public class JDate {
      * @param name Name of window.
      */
     public JDate(String name) {
-        this(name,Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight(),JFrame.EXIT_ON_CLOSE,true);
+        this(name,Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight(),JFrame.EXIT_ON_CLOSE,true,null);
     }
 
     /**
@@ -51,23 +47,29 @@ public class JDate {
      * @param height Height of JFrame Window.
      */
     public JDate(String name, double width, double height) {
-        this(name, width, height, JFrame.EXIT_ON_CLOSE);
+        this(name, width, height, JFrame.EXIT_ON_CLOSE, true, null);
     }
 
     public JDate(String name, double width, double height, int exitOperation) {
-        this(name,width,height,exitOperation,true);
+        this(name,width,height,exitOperation,true,null);
     }
 
-    public JDate(String name, double width, double height, int exitOperation, boolean isVisible) {
+    public JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
         this.name = name;
         this.exitOperation = exitOperation;
         this.width = width;
         this.height = height;
         this.isVisible = isVisible;
+        this.icon = icon;
 
         JFrame frame = new JFrame(name);
         frame.setDefaultCloseOperation(exitOperation);
         frame.setSize((int) width,(int) height);
+
+        if (icon != null) {
+            frame.setIconImage(icon);
+        }
+
         frame.setVisible(isVisible);
     }
 
@@ -79,15 +81,6 @@ public class JDate {
                         "\\___/____/\\_,_/\\__/\\__/ \n" +
                         "                        "
         );
-
-        if (characters.isEmpty()) {
-            LOGGER.warn("Warning there are no characters!");
-        }
-
-    }
-
-    public void addCharacter(Character... character) {
-        characters.addAll(Arrays.asList(character));
     }
 
     // -GETTERS / SETTERS-
@@ -112,8 +105,8 @@ public class JDate {
     public double getGetUserScreenHeight() {
         return this.userScreenHeight;
     }
-    public ArrayList<Character> getCharacters() {
-        return this.characters;
+    public Image getIcon() {
+        return this.icon;
     }
 
     public void setVisible(boolean isVisible) {
