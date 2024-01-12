@@ -73,16 +73,6 @@ public class JDate {
         frame.setVisible(isVisible);
     }
 
-    public void runGame() {
-        LOGGER.info(
-                "\n     _____       __     \n" +
-                        " __ / / _ \\___ _/ /____ \n" +
-                        "/ // / // / _ `/ __/ -_)\n" +
-                        "\\___/____/\\_,_/\\__/\\__/ \n" +
-                        "                        "
-        );
-    }
-
     // -GETTERS / SETTERS-
     public String getName() {
         return this.name;
