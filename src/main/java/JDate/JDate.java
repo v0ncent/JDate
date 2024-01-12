@@ -1,4 +1,4 @@
-// JDate Main Class
+// JDate Class
 // @Auth v0ncent
 package JDate;
 
