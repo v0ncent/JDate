@@ -8,53 +8,52 @@ import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 
-public class JDate {
-    /** Instance of logger for JDate class*/
+/**
+ * A wrapper of the JFrame Object as a singleton instance
+ */
+public final class JDate {
+    /** Singleton instance of jDate OBJ **/
+    private static JDate jDate = null;
+
+    /** Instance of logger for JDate class */
     private static final Logger LOGGER = LoggerFactory.getLogger(JDate.class);
 
-    /** Name of JFrame window */
-    private final String name;
-    /** Exit operation of JFrame Window */
-    private final int exitOperation;
-    /** Width of JFrame Window */
-    private final double width;
-    /** Height of JFrame Window */
-    private final double height;
-    /** Width of user's primary screen */
+    /** Name of JFrame window, defaults to "JDate Window"*/
+    private String name;
+    /** Exit operation of JFrame Window, defualts to EXIT_ON_CLOSE
+     * @see JFrame
+     * */
+    private int exitOperation;
+    /** Width of JFrame Window, defaults to user's screen width
+     * @see Toolkit
+     * */
+    private double width;
+    /** Height of JFrame Window, defaults to user's screen height
+     * @see Toolkit
+     * */
+    private double height;
+    /** Width of user's primary screen
+     * @see Toolkit
+     * */
     private final double userScreenWidth = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    /** Height of user's primary screen */
+    /** Height of user's primary screen
+     * @see Toolkit
+     * */
     private final double userScreenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    /**Window Icon **/
-    private final Image icon;
+    /**Window Icon
+     * @see Image
+     * **/
+    private Image icon;
+
+    /**JFrame Instance of JDate OBJ
+     * @see JFrame
+     * **/
+    private final JFrame frame;
 
     /** If the JFrame window is visible or not */
     private boolean isVisible;
 
-    /**
-     * Creates a JDate object called the given title.
-     * Defaults JFrame window to user Screen size.
-     * @param name Name of window.
-     */
-    public JDate(String name) {
-        this(name,Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight(),JFrame.EXIT_ON_CLOSE,true,null);
-    }
-
-    /**
-     * Creates a JDate Object called the given title, and sets the JFrame window to the passed
-     * Width and Height.
-     * @param name Name of JDate Object.
-     * @param width Width of JFrame Window.
-     * @param height Height of JFrame Window.
-     */
-    public JDate(String name, double width, double height) {
-        this(name, width, height, JFrame.EXIT_ON_CLOSE, true, null);
-    }
-
-    public JDate(String name, double width, double height, int exitOperation) {
-        this(name,width,height,exitOperation,true,null);
-    }
-
-    public JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
+    private JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
         this.name = name;
         this.exitOperation = exitOperation;
         this.width = width;
@@ -62,15 +61,28 @@ public class JDate {
         this.isVisible = isVisible;
         this.icon = icon;
 
-        JFrame frame = new JFrame(name);
-        frame.setDefaultCloseOperation(exitOperation);
-        frame.setSize((int) width,(int) height);
+        this.frame = new JFrame(name);
+        this.frame.setDefaultCloseOperation(exitOperation);
+        this.frame.setSize((int) width,(int) height);
 
         if (icon != null) {
-            frame.setIconImage(icon);
+            this.frame.setIconImage(icon);
         }
 
-        frame.setVisible(isVisible);
+        this.frame.setVisible(isVisible);
+    }
+
+    public static synchronized JDate getInstance() {
+        if (jDate == null) {
+            jDate = new JDate("JDate Window",
+                    Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                    Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
+                    JFrame.EXIT_ON_CLOSE,
+                    true,
+                    null);
+        }
+
+        return jDate;
     }
 
     // -GETTERS / SETTERS-
@@ -98,8 +110,30 @@ public class JDate {
     public Image getIcon() {
         return this.icon;
     }
+    public JFrame getFrame() {
+        return this.frame;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+    public void setExitOperation(int exitOperation) {
+        this.exitOperation = exitOperation;
+    }
+    public void setWidth(double width) {
+        this.width = width;
+    }
+    public void setHeight(double height) {
+        this.height = height;
+    }
+    public void setIcon(Image icon) {
+        this.icon = icon;
+    }
     public void setVisible(boolean isVisible) {
         this.isVisible = isVisible;
+    }
+
+    public static Logger getLogger() {
+        return LOGGER;
     }
 }
