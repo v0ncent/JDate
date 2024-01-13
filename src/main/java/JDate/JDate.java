@@ -40,7 +40,7 @@ public final class JDate {
      * @see Toolkit
      * */
     private final double userScreenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-    /**Window Icon
+    /**Window Icon, defaults to null
      * @see Image
      * **/
     private Image icon;
@@ -50,7 +50,7 @@ public final class JDate {
      * **/
     private final JFrame frame;
 
-    /** If the JFrame window is visible or not */
+    /** If the JFrame window is visible or not, defaults to true*/
     private boolean isVisible;
 
     private JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
