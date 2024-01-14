@@ -66,7 +66,7 @@ public final class JDate {
     @Getter
     private final double userScreenHeight = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
 
-    /**JFrame Instance of JDate OBJ
+    /** JFrame Instance of JDate OBJ
      * @see JFrame
      * **/
     @Getter
