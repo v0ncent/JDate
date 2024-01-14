@@ -4,6 +4,10 @@ plugins {
     id 'io.franzbecker.gradle-lombok' version '5.0.0'
 }
 
+lombok {
+    version = "1.18.28"
+}
+
 group 'org.PolyProductions'
 version '0.0.1'
 
