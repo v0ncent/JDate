@@ -1,7 +1,6 @@
 package JDateTests;
 
 import JDate.Constants;
-import JDate.Exceptions.JDateException;
 import JDate.Exceptions.NoScenesException;
 import JDate.JDateFramework.JDateFramework;
 import org.junit.jupiter.api.Test;
