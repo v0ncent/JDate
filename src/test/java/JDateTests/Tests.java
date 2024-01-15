@@ -1,9 +1,12 @@
 package JDateTests;
 
 import JDate.Constants;
+import JDate.Exceptions.JDateException;
+import JDate.Exceptions.NoScenesException;
+import JDate.JDateFramework.JDateFramework;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class Tests {
 //    /**
@@ -35,5 +38,14 @@ public class Tests {
     @Test
     public void testConstants() {
         assertEquals(Constants.DEFAULT_ICON_PATH, "Images/sailor.png"); // default icon
+    }
+
+    @Test
+    public void testJDateFramework() {
+        // ensure that we get the wanted error when no scenes have been added to list.
+        assertThrows(NoScenesException.class, JDateFramework::run);
+        // ensure that when no scenes have been added by user that the only thing in list is the null intro scene.
+        assertEquals(1, JDateFramework.getScript().size());
+        assertNull(JDateFramework.getScript().get(0));
     }
 }
