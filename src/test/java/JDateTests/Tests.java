@@ -1,19 +1,11 @@
 package JDateTests;
 
 import JDate.Constants;
-import JDate.JDate;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import javax.swing.*;
-import java.awt.*;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Tests {
-    public static final Logger LOGGER = LoggerFactory.getLogger(Tests.class);
-
 //    /**
 //     * Test to see the initialization of JDate window.
 //     * @implNote  IF THIS TEST IS MAKING IT THROUGH TO YOUR COMMITS IT WILL CAUSE DEV OPS TO FAIL SO COMMENT IT OUT !!!!!!!!!!
