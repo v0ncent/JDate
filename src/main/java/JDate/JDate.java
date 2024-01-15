@@ -107,33 +107,8 @@ public final class JDate {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        // if o is null or its instance doesnt equal a jdate instance and not a jframe instance
-        if (o == null || (getClass() != o.getClass() && !(o instanceof JFrame))) return false;
-
-        // if it is a jframe instance and the passed object isn't a JFrame
-        if (o instanceof JFrame && o.getClass() != this.getFrame().getClass()) return false;
-
-        if (o instanceof JFrame) {
-            JFrame jFrame = (JFrame) o;
-            return exitOperation == jFrame.getDefaultCloseOperation() &&
-                    Double.compare(jFrame.getWidth(), width) == 0 &&
-                    Double.compare(jFrame.getHeight(), height) == 0 &&
-                    isVisible == jFrame.isVisible() &&
-                    Objects.equals(name, jFrame.getName()) &&
-                    Objects.equals(icon, jFrame.getIconImage()) &&
-                    Objects.equals(frame, jDate.frame);
-        } else {
-            JDate jDate = (JDate) o;
-            return exitOperation == jDate.exitOperation &&
-                    Double.compare(jDate.width, width) == 0 &&
-                    Double.compare(jDate.height, height) == 0 &&
-                    isVisible == jDate.isVisible && Double.compare(jDate.userScreenWidth, userScreenWidth) == 0
-                    && Double.compare(jDate.userScreenHeight, userScreenHeight) == 0
-                    && Objects.equals(name, jDate.name)
-                    && Objects.equals(icon, jDate.icon)
-                    && Objects.equals(frame, jDate.frame);
-        }
+        // since this class will only ever have one instance of it we can just check if it is a jdate instance
+        return o instanceof JDate;
     }
 
     @Override
