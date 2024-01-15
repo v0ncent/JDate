@@ -31,6 +31,11 @@ public final class JDateFramework {
 
         // play each scene in order passed
         for (Scene scene : script) {
+
+            for (PaintableElement e : scene.paintableElements) {
+                logPaintableElements(e);
+            }
+
             scene.playScene();
         }
 
