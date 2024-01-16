@@ -115,8 +115,10 @@ public final class JDate {
         return jDate;
     }
 
-    private void logPaintableElements(PaintableElement element) {
-        element.getLogger().debug("Loaded: {}", element.getElementName());
+    private void logPaintableElements(ArrayList<PaintableElement> elements) {
+        for (PaintableElement e : elements) {
+            e.getLogger().debug("Loaded: {}", e.getElementName());
+        }
     }
 
     public void addScene(Scene scene) {
@@ -132,10 +134,7 @@ public final class JDate {
 
         // play each scene in order passed
         for (Scene scene : script) {
-
-            for (PaintableElement e : scene.paintableElements) {
-                logPaintableElements(e);
-            }
+            logPaintableElements(scene.getPaintableElements());
 
             scene.playScene();
         }
