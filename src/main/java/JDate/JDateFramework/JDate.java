@@ -1,7 +1,9 @@
 // JDate Class
 // @Auth v0ncent
-package JDate;
+package JDate.JDateFramework;
 
+import JDate.Exceptions.NoScenesException;
+import JDate.PaintableElements.PaintableElement;
 import lombok.Getter;
 import lombok.Setter;
 import org.slf4j.Logger;
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -54,6 +57,10 @@ public final class JDate {
     @Getter
     @Setter
     private Image icon;
+    /** Intro scene is the first scene that gets played within the JDate Framework*/
+    @Getter
+    @Setter
+    private Scene intro = null;
 
     /** Width of user's primary screen
      * @see Toolkit
@@ -71,6 +78,9 @@ public final class JDate {
      * **/
     @Getter
     private final JFrame frame;
+    /** List of scenes to play in order*/
+    @Getter
+    private final ArrayList<Scene> script = new ArrayList<>();
 
     private JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
         this.name = name;
@@ -103,6 +113,33 @@ public final class JDate {
         }
 
         return jDate;
+    }
+
+    private void logPaintableElements(PaintableElement element) {
+        element.getLogger().debug("Loaded: {}", element.getElementName());
+    }
+
+    public void addScene(Scene scene) {
+        script.add(scene);
+    }
+
+    public void run() throws NoScenesException {
+        addScene(this.getIntro());
+
+        if (script.size() == 1 && script.get(0) == null) {
+            throw new NoScenesException();
+        }
+
+        // play each scene in order passed
+        for (Scene scene : script) {
+
+            for (PaintableElement e : scene.paintableElements) {
+                logPaintableElements(e);
+            }
+
+            scene.playScene();
+        }
+
     }
 
     @Override

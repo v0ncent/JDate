@@ -1,8 +1,8 @@
 package JDateTests;
 
-import JDate.Constants;
+import JDate.JDateFramework.Constants;
 import JDate.Exceptions.NoScenesException;
-import JDate.JDateFramework.JDateFramework;
+import JDate.JDateFramework.JDate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,9 +42,9 @@ public class Tests {
     @Test
     public void testJDateFramework() {
         // ensure that we get the wanted error when no scenes have been added to list.
-        assertThrows(NoScenesException.class, JDateFramework::run);
+        assertThrows(NoScenesException.class, () -> JDate.getInstance().run());
         // ensure that when no scenes have been added by user that the only thing in list is the null intro scene.
-        assertEquals(1, JDateFramework.getScript().size());
-        assertNull(JDateFramework.getScript().get(0));
+        assertEquals(1, JDate.getInstance().getScript().size());
+        assertNull(JDate.getInstance().getScript().get(0));
     }
 }
