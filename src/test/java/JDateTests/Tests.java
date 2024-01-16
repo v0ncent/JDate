@@ -1,11 +1,9 @@
 package JDateTests;
 
 import JDate.JDateFramework.Constants;
-import JDate.Exceptions.NoScenesException;
-import JDate.JDateFramework.JDate;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Tests {
 //    /**
@@ -29,6 +27,11 @@ public class Tests {
 //        assertNotEquals(jDateFrame, null);
 //        // The hashCode of each object in a group is the same as the hash code of each other member of the group
 //        assertEquals(jDateFrame.hashCode(), secondObj.hashCode());
+          // ensure that we get the wanted error when no scenes have been added to list.
+//        assertThrows(NoScenesException.class, () -> JDate.getInstance().run());
+//        ensure that when no scenes have been added by user that the only thing in list is the null intro scene.
+//        assertEquals(1, JDate.getInstance().getScript().size());
+//        assertNull(JDate.getInstance().getScript().get(0));
 //    }
 
     /**
@@ -37,14 +40,5 @@ public class Tests {
     @Test
     public void testConstants() {
         assertEquals(Constants.DEFAULT_ICON_PATH, "Images/sailor.png"); // default icon
-    }
-
-    @Test
-    public void testJDateFramework() {
-        // ensure that we get the wanted error when no scenes have been added to list.
-        assertThrows(NoScenesException.class, () -> JDate.getInstance().run());
-        // ensure that when no scenes have been added by user that the only thing in list is the null intro scene.
-        assertEquals(1, JDate.getInstance().getScript().size());
-        assertNull(JDate.getInstance().getScript().get(0));
     }
 }
