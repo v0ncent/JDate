@@ -3,9 +3,11 @@
 package JDate.JDateFramework;
 
 import JDate.Exceptions.NoScenesException;
+import JDate.JDateFramework.TimelinePlayer.TimelinePlayer;
 import JDate.PaintableElements.PaintableElement;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +19,7 @@ import java.util.Objects;
 /**
  * A wrapper of the JFrame Object as a singleton instance
  */
-public final class JDate {
+public final class JDate implements TimelinePlayer, Constants {
     /** Singleton instance of jDate OBJ **/
     private static JDate jDate = null;
 
@@ -29,7 +31,7 @@ public final class JDate {
     @Getter
     @Setter
     private String name;
-    /** Exit operation of JFrame Window, defualts to EXIT_ON_CLOSE
+    /** Exit operation of JFrame Window, defaults to EXIT_ON_CLOSE
      * @see JFrame
      * */
     @Getter
@@ -82,6 +84,15 @@ public final class JDate {
     @Getter
     private final ArrayList<Scene> script = new ArrayList<>();
 
+    /**
+     * Creates a JFrame OBJ from the passed values
+     * @param name Name of JFrame window
+     * @param width Width of JFrame window
+     * @param height Height of JFrame window
+     * @param exitOperation Default close method of JFrame window
+     * @param isVisible If JFrame window is visible or not
+     * @param icon Icon of JFrame window
+     */
     private JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
         this.name = name;
         this.exitOperation = exitOperation;
@@ -101,6 +112,10 @@ public final class JDate {
         this.frame.setVisible(isVisible);
     }
 
+    /**
+     * Gets the single instance of JDate OBJ.
+     * @return singleton instance of JDate OBJ, if no singleton instance is made obj contains default values
+     */
     public static synchronized JDate getInstance() {
         if (jDate == null) {
             jDate = new JDate("JDate Window",
@@ -108,22 +123,54 @@ public final class JDate {
                     Toolkit.getDefaultToolkit().getScreenSize().getWidth(),
                     JFrame.EXIT_ON_CLOSE,
                     true,
-                    new ImageIcon(Constants.DEFAULT_ICON_PATH,  "JDate default image icon.").getImage()
+                    new ImageIcon(DEFAULT_ICON_PATH,  "JDate default image icon.").getImage()
             );
         }
 
         return jDate;
     }
 
-    private void logPaintableElements(PaintableElement element) {
-        element.getLogger().debug("Loaded: {}", element.getElementName());
+    /**
+     * Logs all elements in a scene
+     * @param elements List of paintable elements in a scene
+     * @see PaintableElement
+     * @see Scene
+     */
+    private void logPaintableElements(@NotNull ArrayList<PaintableElement> elements) {
+        for (PaintableElement e : elements) {
+            e.getLogger().debug("Loaded: {}", e.getElementName());
+        }
     }
 
-    public void addScene(Scene scene) {
+    /**
+     * Adds a scene to the script list
+     * @implNote The order of scenes in which they are added determines when they play
+     * @param scene Scene OBJ to add to script list
+     * @see Scene
+     */
+    public void addScene(@NotNull Scene scene) {
         script.add(scene);
     }
 
+    /**
+     * Runs JDate timeline player framework
+     * @throws NoScenesException When no scenes have been added to script list
+     * @see Scene
+     * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
+     */
     public void run() throws NoScenesException {
+        runPlayer(getScript());
+    }
+
+    /**
+     * JDate timeline player method. Paints scenes in order in which they are passed into JFrame window
+     * @param script List of Scenes, Transitions to play into JFrame window
+     * @throws NoScenesException When no scenes have been added to script list
+     * @see Scene
+     * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
+     */
+    @Override
+    public void runPlayer(ArrayList<Scene> script) throws NoScenesException {
         addScene(this.getIntro());
 
         if (script.size() == 1 && script.get(0) == null) {
@@ -132,14 +179,10 @@ public final class JDate {
 
         // play each scene in order passed
         for (Scene scene : script) {
-
-            for (PaintableElement e : scene.paintableElements) {
-                logPaintableElements(e);
-            }
+            logPaintableElements(scene.getPaintableElements());
 
             scene.playScene();
         }
-
     }
 
     @Override
