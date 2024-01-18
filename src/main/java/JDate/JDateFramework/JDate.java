@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * A wrapper of the JFrame Object as a singleton instance
  */
-public final class JDate implements TimelinePlayer, Constants {
+public final class JDate extends TimelinePlayer implements Constants {
     /** Singleton instance of jDate OBJ **/
     private static JDate jDate = null;
 
@@ -170,7 +170,7 @@ public final class JDate implements TimelinePlayer, Constants {
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     @Override
-    public void runPlayer(ArrayList<Scene> script) throws NoScenesException {
+    protected void runPlayer(ArrayList<Scene> script) throws NoScenesException {
         addScene(this.getIntro());
 
         if (script.size() == 1 && script.get(0) == null) {
