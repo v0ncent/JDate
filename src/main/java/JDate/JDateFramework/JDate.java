@@ -161,7 +161,7 @@ public final class JDate extends TimelinePlayer implements Constants {
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     public void run() throws NoScenesException {
-        runPlayer(getScript());
+        this.runPlayer(getScript());
     }
 
     /**
@@ -173,7 +173,7 @@ public final class JDate extends TimelinePlayer implements Constants {
      */
     @Override
     protected void runPlayer(ArrayList<Scene> script) throws NoScenesException {
-        addScene(this.getIntro());
+        this.addScene(this.getIntro());
 
         if (script.size() == 1 && script.get(0) == null) {
             throw new NoScenesException();
@@ -182,7 +182,7 @@ public final class JDate extends TimelinePlayer implements Constants {
         // play each scene in order passed
         for (int i = 0; i < script.size(); i++) {
             final Scene scene = script.get(i);
-            logPaintableElements(scene.getPaintableElements());
+            this.logPaintableElements(scene.getPaintableElements());
 
             scene.playScene();
         }
