@@ -10,6 +10,7 @@ import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.w3c.dom.ElementTraversal;
 
 import javax.swing.*;
 import java.awt.*;
@@ -137,8 +138,9 @@ public final class JDate extends TimelinePlayer implements Constants {
      * @see Scene
      */
     private void logPaintableElements(@NotNull ArrayList<PaintableElement> elements) {
-        for (PaintableElement e : elements) {
-            e.getLogger().debug("Loaded: {}", e.getElementName());
+        for (int i = 0; i < elements.size(); i++) {
+            final PaintableElement element = elements.get(i);
+            element.getLogger().debug("Loaded: {}", element.getElementName());
         }
     }
 
@@ -178,7 +180,8 @@ public final class JDate extends TimelinePlayer implements Constants {
         }
 
         // play each scene in order passed
-        for (Scene scene : script) {
+        for (int i = 0; i < script.size(); i++) {
+            final Scene scene = script.get(i);
             logPaintableElements(scene.getPaintableElements());
 
             scene.playScene();
