@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * A wrapper of the JFrame Object as a singleton instance
  */
-public final class JDate implements TimelinePlayer, Constants {
+public final class JDate extends TimelinePlayer implements Constants {
     /** Singleton instance of jDate OBJ **/
     private static JDate jDate = null;
 
@@ -137,8 +137,9 @@ public final class JDate implements TimelinePlayer, Constants {
      * @see Scene
      */
     private void logPaintableElements(@NotNull ArrayList<PaintableElement> elements) {
-        for (PaintableElement e : elements) {
-            e.getLogger().debug("Loaded: {}", e.getElementName());
+        for (int i = 0; i < elements.size(); i++) {
+            final PaintableElement element = elements.get(i);
+            element.getLogger().debug("Loaded: {}", element.getElementName());
         }
     }
 
@@ -159,7 +160,7 @@ public final class JDate implements TimelinePlayer, Constants {
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     public void run() throws NoScenesException {
-        runPlayer(getScript());
+        this.runPlayer(getScript());
     }
 
     /**
@@ -170,16 +171,17 @@ public final class JDate implements TimelinePlayer, Constants {
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     @Override
-    public void runPlayer(ArrayList<Scene> script) throws NoScenesException {
-        addScene(this.getIntro());
+    protected void runPlayer(ArrayList<Scene> script) throws NoScenesException {
+        this.addScene(this.getIntro());
 
         if (script.size() == 1 && script.get(0) == null) {
             throw new NoScenesException();
         }
 
         // play each scene in order passed
-        for (Scene scene : script) {
-            logPaintableElements(scene.getPaintableElements());
+        for (int i = 0; i < script.size(); i++) {
+            final Scene scene = script.get(i);
+            this.logPaintableElements(scene.getPaintableElements());
 
             scene.playScene();
         }
