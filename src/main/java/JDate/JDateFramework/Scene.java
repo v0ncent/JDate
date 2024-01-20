@@ -1,7 +1,7 @@
 package JDate.JDateFramework;
 
 import JDate.PaintableElements.PaintableElement;
-adimport lombok.Getter;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
