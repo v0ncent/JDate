@@ -3,8 +3,8 @@
 package JDate.JDateFramework;
 
 import JDate.Exceptions.NoScenesException;
+import JDate.JDateFramework.Listeners.JDateWindowListener;
 import JDate.JDateFramework.TimelinePlayer.TimelinePlayer;
-import JDate.PaintableElements.PaintableElement;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
@@ -30,7 +30,7 @@ public final class JDate extends TimelinePlayer implements Constants {
     /** Name of JFrame window, defaults to "JDate Window"*/
     @Getter
     @Setter
-    private String name;
+    private String windowName;
     /** Exit operation of JFrame Window, defaults to EXIT_ON_CLOSE
      * @see JFrame
      * */
@@ -59,10 +59,6 @@ public final class JDate extends TimelinePlayer implements Constants {
     @Getter
     @Setter
     private Image icon;
-    /** Intro scene is the first scene that gets played within the JDate Framework*/
-    @Getter
-    @Setter
-    private Scene intro = null;
 
     /** Width of user's primary screen
      * @see Toolkit
@@ -80,9 +76,9 @@ public final class JDate extends TimelinePlayer implements Constants {
      * **/
     @Getter
     private final JFrame frame;
-    /** List of scenes to play in order*/
+
     @Getter
-    private final ArrayList<Scene> script = new ArrayList<>();
+    private final JDateWindowListener jDateWindowListener = new JDateWindowListener();
 
     /**
      * Creates a JFrame OBJ from the passed values
@@ -94,7 +90,7 @@ public final class JDate extends TimelinePlayer implements Constants {
      * @param icon Icon of JFrame window
      */
     private JDate(String name, double width, double height, int exitOperation, boolean isVisible, Image icon) {
-        this.name = name;
+        this.windowName = name;
         this.exitOperation = exitOperation;
         this.width = width;
         this.height = height;
@@ -104,6 +100,7 @@ public final class JDate extends TimelinePlayer implements Constants {
         this.frame = new JFrame(name);
         this.frame.setDefaultCloseOperation(exitOperation);
         this.frame.setSize((int) width,(int) height);
+        this.frame.addWindowListener(this.jDateWindowListener);
 
         if (icon != null) {
             this.frame.setIconImage(icon);
@@ -131,36 +128,12 @@ public final class JDate extends TimelinePlayer implements Constants {
     }
 
     /**
-     * Logs all elements in a scene
-     * @param elements List of paintable elements in a scene
-     * @see PaintableElement
-     * @see Scene
-     */
-    private void logPaintableElements(@NotNull ArrayList<PaintableElement> elements) {
-        for (int i = 0; i < elements.size(); i++) {
-            final PaintableElement element = elements.get(i);
-            element.getLogger().debug("Loaded: {}", element.getElementName());
-        }
-    }
-
-    /**
-     * Adds a scene to the script list
-     * @implNote The order of scenes in which they are added determines when they play
-     * @param scene Scene OBJ to add to script list
-     * @see Scene
-     */
-    public void addScene(@NotNull Scene scene) {
-        script.add(scene);
-    }
-
-    /**
-     * Runs JDate timeline player framework
-     * @throws NoScenesException When no scenes have been added to script list
+     * Runs JDate timeline player framework until program is closed on separate thread.
      * @see Scene
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     public void run() throws NoScenesException {
-        this.runPlayer(getScript());
+        this.runPlayer(this.getScript());
     }
 
     /**
@@ -171,19 +144,23 @@ public final class JDate extends TimelinePlayer implements Constants {
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     @Override
-    protected void runPlayer(ArrayList<Scene> script) throws NoScenesException {
-        this.addScene(this.getIntro());
-
+    protected void runPlayer(@NotNull ArrayList<Scene> script) throws NoScenesException {
         if (script.size() == 1 && script.get(0) == null) {
             throw new NoScenesException();
         }
 
-        // play each scene in order passed
-        for (int i = 0; i < script.size(); i++) {
+        // game loop to play each scene in order of passage, when all scenes played go back to the beginning.
+        int i = 0;
+        while(this.isShouldRender()) {
+            if (i == script.size()) {
+                i = 0;
+            }
+
             final Scene scene = script.get(i);
-            this.logPaintableElements(scene.getPaintableElements());
+//            this.logPaintableElements(scene.getPaintableElements()); // uncomment when scene.playscene takes longer so we dont spam this log
 
             scene.playScene();
+            i++;
         }
     }
 
@@ -195,6 +172,7 @@ public final class JDate extends TimelinePlayer implements Constants {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, exitOperation, width, height, isVisible, icon, frame);
+        return Objects.hash(windowName, exitOperation, width, height, isVisible, icon, frame);
     }
+
 }
