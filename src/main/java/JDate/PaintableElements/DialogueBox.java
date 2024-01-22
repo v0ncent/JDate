@@ -10,4 +10,9 @@ public class DialogueBox implements PaintableElement {
     public Logger getLogger() {
         return LOGGER;
     }
+
+    @Override
+    public ELEMENT_TYPE getElementType() {
+        return ELEMENT_TYPE.LABEL;
+    }
 }
