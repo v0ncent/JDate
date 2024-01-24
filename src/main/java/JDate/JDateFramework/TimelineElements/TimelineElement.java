@@ -1,35 +1,40 @@
-package JDate.JDateFramework;
+package JDate.JDateFramework.TimelineElements;
 
 import JDate.PaintableElements.PaintableElement;
 import lombok.Getter;
 import lombok.Setter;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class Scene {
+public abstract class TimelineElement {
     public final ArrayList<PaintableElement> paintableElements = new ArrayList<>();
 
     @Getter
     @Setter
     public String sceneName;
 
-    public Scene(String sceneName) {
+    public TimelineElement(String sceneName) {
         this.sceneName = sceneName;
     }
 
-    public void playScene() {
+    public void playOutElement() {
 
     }
 
+    public boolean hasPaintableElements() {
+        return this.getPaintableElements() != null;
+    }
+
+    @Nullable
     protected abstract ArrayList<PaintableElement> getPaintableElements();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Scene)) return false;
-        Scene scene = (Scene) o;
-        return getPaintableElements().equals(scene.getPaintableElements()) && getSceneName().equals(scene.getSceneName());
+        if (!(o instanceof TimelineElement timelineElement)) return false;
+        return Objects.equals(getPaintableElements(), timelineElement.getPaintableElements()) && getSceneName().equals(timelineElement.getSceneName());
     }
 
     @Override

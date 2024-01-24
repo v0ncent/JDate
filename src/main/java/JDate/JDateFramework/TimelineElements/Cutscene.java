@@ -1,0 +1,16 @@
+package JDate.JDateFramework.TimelineElements;
+
+import JDate.PaintableElements.PaintableElement;
+
+import java.util.ArrayList;
+
+public class Cutscene extends TimelineElement {
+    public Cutscene(String sceneName) {
+        super(sceneName);
+    }
+
+    @Override
+    protected ArrayList<PaintableElement> getPaintableElements() {
+        return null;
+    }
+}

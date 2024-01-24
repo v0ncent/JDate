@@ -4,16 +4,15 @@ package JDate.JDateFramework;
 
 import JDate.Exceptions.NoScenesException;
 import JDate.JDateFramework.Listeners.JDateWindowListener;
+import JDate.JDateFramework.TimelineElements.TimelineElement;
 import JDate.JDateFramework.TimelinePlayer.TimelinePlayer;
 import lombok.Getter;
 import lombok.Setter;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -128,40 +127,12 @@ public final class JDate extends TimelinePlayer implements Constants {
     }
 
     /**
-     * Runs JDate timeline player framework until program is closed on separate thread.
-     * @see Scene
+     * Runs JDate timeline player framework until window is closed.
+     * @see TimelineElement
      * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
      */
     public void run() throws NoScenesException {
-        this.runPlayer(this.getScript());
-    }
-
-    /**
-     * JDate timeline player method. Paints scenes in order in which they are passed into JFrame window
-     * @param script List of Scenes, Transitions to play into JFrame window
-     * @throws NoScenesException When no scenes have been added to script list
-     * @see Scene
-     * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
-     */
-    @Override
-    protected void runPlayer(@NotNull ArrayList<Scene> script) throws NoScenesException {
-        if (script.size() == 1 && script.get(0) == null) {
-            throw new NoScenesException();
-        }
-
-        // game loop to play each scene in order of passage, when all scenes played go back to the beginning.
-        int i = 0;
-        while(this.isShouldRender()) {
-            if (i == script.size()) {
-                i = 0;
-            }
-
-            final Scene scene = script.get(i);
-//            this.logPaintableElements(scene.getPaintableElements()); // uncomment when scene.playscene takes longer so we dont spam this log
-
-            scene.playScene();
-            i++;
-        }
+        this.runPlayer();
     }
 
     @Override
