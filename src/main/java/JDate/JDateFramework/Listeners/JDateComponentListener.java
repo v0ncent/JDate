@@ -7,7 +7,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.function.Consumer;
 
-public class JDateComponentListener implements ComponentListener {
+public final class JDateComponentListener implements ComponentListener {
     private final Logger LOGGER = LoggerFactory.getLogger(JDateComponentListener.class);
 
     private static Consumer<ComponentEvent> componentResizedAction = null;
@@ -17,30 +17,22 @@ public class JDateComponentListener implements ComponentListener {
 
     @Override
     public void componentResized(ComponentEvent e) {
-        if (JDateComponentListener.componentResizedAction != null) {
-            JDateComponentListener.componentResizedAction.accept(e);
-        }
+        ListenerUtil.acceptIfNotNull(componentResizedAction, e);
     }
 
     @Override
     public void componentMoved(ComponentEvent e) {
-        if (JDateComponentListener.componentMovedAction != null) {
-            JDateComponentListener.componentMovedAction.accept(e);
-        }
+        ListenerUtil.acceptIfNotNull(componentMovedAction, e);
     }
 
     @Override
     public void componentShown(ComponentEvent e) {
-        if (JDateComponentListener.componentShownAction != null) {
-            JDateComponentListener.componentShownAction.accept(e);
-        }
+        ListenerUtil.acceptIfNotNull(componentShownAction, e);
     }
 
     @Override
     public void componentHidden(ComponentEvent e) {
-        if (JDateComponentListener.componentHiddenAction != null) {
-            JDateComponentListener.componentHiddenAction.accept(e);
-        }
+        ListenerUtil.acceptIfNotNull(componentHiddenAction, e);
     }
 
     public static void onComponentResized(Consumer<ComponentEvent> wantedAction) {

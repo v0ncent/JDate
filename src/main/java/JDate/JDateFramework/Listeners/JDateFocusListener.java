@@ -7,7 +7,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.function.Consumer;
 
-public class JDateFocusListener implements FocusListener {
+public final class JDateFocusListener implements FocusListener {
     private final Logger LOGGER = LoggerFactory.getLogger(JDateFocusListener.class);
 
     private static Consumer<FocusEvent> focusGainedAction = null;
@@ -15,16 +15,12 @@ public class JDateFocusListener implements FocusListener {
 
     @Override
     public void focusGained(FocusEvent e) {
-        if (JDateFocusListener.focusGainedAction != null) {
-            JDateFocusListener.focusGainedAction.accept(e);
-        }
+        ListenerUtil.acceptIfNotNull(focusGainedAction, e);
     }
 
     @Override
     public void focusLost(FocusEvent e) {
-        if (JDateFocusListener.focusLostAction != null) {
-            JDateFocusListener.focusGainedAction.accept(e);
-        }
+        ListenerUtil.acceptIfNotNull(focusLostAction, e);
     }
 
     public static void onFocusGained(Consumer<FocusEvent> wantedAction) {
