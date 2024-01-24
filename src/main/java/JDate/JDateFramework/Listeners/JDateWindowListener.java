@@ -4,16 +4,20 @@ import JDate.JDateFramework.JDate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.util.function.Consumer;
 
 public final class JDateWindowListener implements WindowListener {
     private final Logger LOGGER = LoggerFactory.getLogger(JDateWindowListener.class);
 
+    private static Consumer<ComponentEvent> windowIconifiedAction = null;
+
     // runs when window is created and opened
     @Override
     public void windowOpened(WindowEvent e) {
-        LOGGER.info("Opening JDate window.");
+
     }
 
     // runs when close button is hit
@@ -26,30 +30,36 @@ public final class JDateWindowListener implements WindowListener {
     // runs when window is closed
     @Override
     public void windowClosed(WindowEvent e) {
-        LOGGER.info("Window Closed Successfully.");
+
     }
 
     // runs when window is minimized
     @Override
     public void windowIconified(WindowEvent e) {
-        LOGGER.info("Window Iconified.");
+        if (JDateWindowListener.windowIconifiedAction != null) {
+            JDateWindowListener.windowIconifiedAction.accept(e);
+        }
     }
 
     // runs when window is unminimized
     @Override
     public void windowDeiconified(WindowEvent e) {
-        LOGGER.info("Window Deiconified.");
+
     }
 
     // runs when window comes into focus
     @Override
     public void windowActivated(WindowEvent e) {
-        LOGGER.info("Window Activated");
+
     }
 
     // runs when window is minimized / unfocused
     @Override
     public void windowDeactivated(WindowEvent e) {
-        LOGGER.info("Window Deactivated");
+
+    }
+
+    public static void mapWindowIconified(Consumer<ComponentEvent> wantedAction) {
+        windowIconifiedAction = wantedAction;
     }
 }

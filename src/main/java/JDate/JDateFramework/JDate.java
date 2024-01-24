@@ -3,8 +3,7 @@
 package JDate.JDateFramework;
 
 import JDate.Exceptions.NoScenesException;
-import JDate.JDateFramework.Listeners.JDateWindowListener;
-import JDate.JDateFramework.Listeners.JDateKeyboardListener;
+import JDate.JDateFramework.Listeners.*;
 import JDate.JDateFramework.TimelineElements.TimelineElement;
 import JDate.JDateFramework.TimelinePlayer.TimelinePlayer;
 import lombok.Getter;
@@ -80,14 +79,47 @@ public final class JDate extends TimelinePlayer implements Constants {
     /**
      * JDate's window listener.
      */
-    @Getter
     private final JDateWindowListener jDateWindowListener = new JDateWindowListener();
 
     /**
      * JDate's key listener.
      */
-    @Getter
     private final JDateKeyboardListener jDateKeyboardListener = new JDateKeyboardListener();
+
+    /**
+     * JDate's component listener.
+     */
+    private final JDateComponentListener jDateComponentListener = new JDateComponentListener();
+
+    /**
+     * JDate's focus listener.
+     */
+    private final JDateFocusListener jDateFocusListener = new JDateFocusListener();
+
+    /**
+     * JDate's hierarchy bounds listener.
+     */
+    private final JDateHierarchyBoundsListener jDateHierarchyBoundsListener = new JDateHierarchyBoundsListener();
+
+    /**
+     * JDate's hierarchy listener.
+     */
+    private final JDateHierarchyListener jDateHierarchyListener = new JDateHierarchyListener();
+
+    /**
+     * JDate's mouse listener listener.
+     */
+    private final JDateMouseListener jDateMouseListener = new JDateMouseListener();
+
+    /**
+     * JDate's mouse motion listener.
+     */
+    private final JDateMouseMotionListener jDateMouseMotionListener = new JDateMouseMotionListener();
+
+    /**
+     * JDate's mousewheel listener.
+     */
+    private final JDateMouseWheelListener jDateMouseWheelListener = new JDateMouseWheelListener();
 
     /**
      * Creates a JFrame OBJ from the passed values
@@ -111,6 +143,13 @@ public final class JDate extends TimelinePlayer implements Constants {
         this.frame.setSize((int) width,(int) height);
         this.frame.addWindowListener(this.jDateWindowListener);
         this.frame.addKeyListener(this.jDateKeyboardListener);
+        this.frame.addComponentListener(this.jDateComponentListener);
+        this.frame.addFocusListener(this.jDateFocusListener);
+        this.frame.addHierarchyBoundsListener(this.jDateHierarchyBoundsListener);
+        this.frame.addHierarchyListener(this.jDateHierarchyListener);
+        this.frame.addMouseListener(this.jDateMouseListener);
+        this.frame.addMouseMotionListener(this.jDateMouseMotionListener);
+        this.frame.addMouseWheelListener(this.jDateMouseWheelListener);
 
         if (icon != null) {
             this.frame.setIconImage(icon);

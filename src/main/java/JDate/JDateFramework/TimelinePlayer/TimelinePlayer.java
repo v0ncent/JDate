@@ -10,9 +10,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-public class TimelinePlayer {
+public class TimelinePlayer extends Timeline {
     @Getter
-    private final Timeline timeline = Timeline.getInstance();
+    private final Timeline timeline = new Timeline();
 
     /**
      * If window should be rendering elements
@@ -45,7 +45,7 @@ public class TimelinePlayer {
     protected void runPlayer() throws NoScenesException {
         LinkedList<TimelineElement> script = timeline.getScript();
 
-        if (script.size() == 1 && script.get(0) == null) {
+        if (script.size() == 0) {
             throw new NoScenesException();
         }
 
