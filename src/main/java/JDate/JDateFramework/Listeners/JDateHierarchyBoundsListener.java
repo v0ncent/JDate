@@ -23,11 +23,11 @@ public final class JDateHierarchyBoundsListener implements HierarchyBoundsListen
         ListenerUtil.acceptIfNotNull(ancestorResizedAction, e);
     }
 
-    public static void onFocusGained(Consumer<HierarchyEvent> wantedAction) {
+    public static void onAncestorMoved(Consumer<HierarchyEvent> wantedAction) {
         ancestorMovedAction = wantedAction;
     }
 
-    public static void onFocusLost(Consumer<HierarchyEvent> wantedAction) {
+    public static void onAncestorResized(Consumer<HierarchyEvent> wantedAction) {
         ancestorResizedAction = wantedAction;
     }
 }
