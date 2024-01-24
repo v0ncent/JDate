@@ -4,7 +4,7 @@ import JDate.PaintableElements.PaintableElement;
 
 import java.util.ArrayList;
 
-public class StartMenu extends TimelineElement {
+public abstract class StartMenu extends TimelineElement {
 
     public StartMenu(String sceneName) {
         super(sceneName);

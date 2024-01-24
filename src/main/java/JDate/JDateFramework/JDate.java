@@ -4,6 +4,7 @@ package JDate.JDateFramework;
 
 import JDate.Exceptions.NoScenesException;
 import JDate.JDateFramework.Listeners.JDateWindowListener;
+import JDate.JDateFramework.Listeners.JDateKeyboardListener;
 import JDate.JDateFramework.TimelineElements.TimelineElement;
 import JDate.JDateFramework.TimelinePlayer.TimelinePlayer;
 import lombok.Getter;
@@ -76,8 +77,17 @@ public final class JDate extends TimelinePlayer implements Constants {
     @Getter
     private final JFrame frame;
 
+    /**
+     * JDate's window listener.
+     */
     @Getter
     private final JDateWindowListener jDateWindowListener = new JDateWindowListener();
+
+    /**
+     * JDate's key listener.
+     */
+    @Getter
+    private final JDateKeyboardListener jDateKeyboardListener = new JDateKeyboardListener();
 
     /**
      * Creates a JFrame OBJ from the passed values
@@ -100,6 +110,7 @@ public final class JDate extends TimelinePlayer implements Constants {
         this.frame.setDefaultCloseOperation(exitOperation);
         this.frame.setSize((int) width,(int) height);
         this.frame.addWindowListener(this.jDateWindowListener);
+        this.frame.addKeyListener(this.jDateKeyboardListener);
 
         if (icon != null) {
             this.frame.setIconImage(icon);

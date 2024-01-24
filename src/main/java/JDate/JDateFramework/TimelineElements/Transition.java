@@ -4,7 +4,7 @@ import JDate.PaintableElements.PaintableElement;
 
 import java.util.ArrayList;
 
-public class Transition extends TimelineElement {
+public abstract class Transition extends TimelineElement {
 
     public Transition(String sceneName) {
         super(sceneName);
