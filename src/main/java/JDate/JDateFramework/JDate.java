@@ -149,7 +149,7 @@ public final class JDate extends TimelinePlayer implements Constants {
         this.frame.addHierarchyListener(this.jDateHierarchyListener);
         this.frame.addMouseListener(this.jDateMouseListener);
         this.frame.addMouseMotionListener(this.jDateMouseMotionListener);
-        this.frame.addMouseWheelListener(this.jDateMouseWheelListener);
+        this.frame.addMouseWheelListener(this.jDateMouseWheelListener);//
 
         if (icon != null) {
             this.frame.setIconImage(icon);
