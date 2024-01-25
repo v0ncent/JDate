@@ -20,6 +20,12 @@ public abstract class TimelineElement {
     }
 
     public void playOutElement() {
+        // placeholder code right now so my machine doesnt break with constant gc calls.
+        try {
+            Thread.sleep(600);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -28,7 +34,7 @@ public abstract class TimelineElement {
     }
 
     @Nullable
-    protected abstract ArrayList<PaintableElement> getPaintableElements();
+    public abstract ArrayList<PaintableElement> getPaintableElements();
 
     @Override
     public boolean equals(Object o) {

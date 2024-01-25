@@ -11,7 +11,7 @@ public abstract class Cutscene extends TimelineElement {
     }
 
     @Override
-    protected ArrayList<PaintableElement> getPaintableElements() {
+    public ArrayList<PaintableElement> getPaintableElements() {
         return null;
     }
 }
