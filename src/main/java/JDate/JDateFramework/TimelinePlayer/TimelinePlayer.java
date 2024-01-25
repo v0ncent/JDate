@@ -1,57 +1,36 @@
 package JDate.JDateFramework.TimelinePlayer;
 
 import JDate.Exceptions.NoScenesException;
-import JDate.JDateFramework.Scene;
+import JDate.JDateFramework.TimelineElements.TimelineElement;
 import JDate.PaintableElements.PaintableElement;
 import lombok.Getter;
 import lombok.Setter;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
-public abstract class TimelinePlayer {
-    public TimelinePlayer() {
-        // add first element to intro
-        this.addScene(this.getIntro());
-    }
+public class TimelinePlayer extends Timeline {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TimelinePlayer.class);
 
-    /** If window should be rendering elements */
+    @Getter
+    private final Timeline timeline = new Timeline();
+
+    /**
+     * If window should be rendering elements
+     */
     @Getter
     @Setter
     private boolean shouldRender = true;
 
-    /** Intro scene is the first scene that gets played within the JDate Framework*/
-    @Getter
-    private Scene intro = null;
-
-    /** List of scenes to play in order*/
-    @Getter
-    private final ArrayList<Scene> script = new ArrayList<>();
-
-    /**
-     * Sets very first scene played by TimelinePlayer.
-     * @param scene Scene to be the intro.
-     */
-    public void setIntro(Scene scene) {
-        this.intro = scene;
-        this.getScript().set(0, intro); // set scripts first element (always intro scene) to new intro.
-    }
-
-    /**
-     * Adds a scene to the script list
-     * @implNote The order of scenes in which they are added determines when they play
-     * @param scene Scene OBJ to add to script list
-     * @see Scene
-     */
-    public void addScene(@NotNull Scene scene) {
-        script.add(scene);
-    }
-
     /**
      * Logs all elements in a scene
+     *
      * @param elements List of paintable elements in a scene
      * @see PaintableElement
-     * @see Scene
+     * @see TimelineElement
      */
     protected void logPaintableElements(@NotNull ArrayList<PaintableElement> elements) {
         for (int i = 0; i < elements.size(); i++) {
@@ -60,5 +39,38 @@ public abstract class TimelinePlayer {
         }
     }
 
-    protected abstract void runPlayer(ArrayList<Scene> script) throws NoScenesException;
+    /**
+     * JDate timeline player method. Paints scenes in order in which they are passed into JFrame window
+     *
+     * @throws NoScenesException When no scenes have been added to script list
+     * @implNote The timeline player plays scenes and transitions in the order in which they are added to the script list
+     * @see TimelineElement
+     */
+    protected void runPlayer() throws NoScenesException {
+        LinkedList<TimelineElement> script = timeline.getScript();
+
+        if (script.size() == 0) {
+            throw new NoScenesException();
+        }
+
+        // game loop to play each scene in order of passage, when all scenes played go back to the beginning.
+        int i = 0;
+        while (this.isShouldRender()) {
+            if (i == script.size()) {
+                LOGGER.info("TimelinePlayer reached the end of current timeline: Clearing heap of garbage.");
+                System.gc(); // force garbage collection after a full timeline run through. Need this to clear out heap.
+                i = 0;
+            }
+
+            final TimelineElement timelineElement = script.get(i);
+
+            if (timelineElement.hasPaintableElements() && timelineElement.getPaintableElements() != null) {
+                this.logPaintableElements(timelineElement.getPaintableElements()); // uncomment when scene.playscene takes longer so we dont spam this log
+            }
+
+            timelineElement.playOutElement();
+            i++;
+        }
+    }
+
 }
