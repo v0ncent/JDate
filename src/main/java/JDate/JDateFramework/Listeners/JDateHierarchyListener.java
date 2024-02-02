@@ -7,7 +7,7 @@ import java.awt.event.HierarchyEvent;
 import java.awt.event.HierarchyListener;
 import java.util.function.Consumer;
 
-public class JDateHierarchyListener implements HierarchyListener {
+public final class JDateHierarchyListener implements HierarchyListener {
     private final Logger LOGGER = LoggerFactory.getLogger(JDateHierarchyListener.class);
 
     private static Consumer<HierarchyEvent> hierarchyEventAction = null;
