@@ -7,7 +7,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.function.Consumer;
 
-public class JDateMouseWheelListener implements MouseWheelListener {
+public final class JDateMouseWheelListener implements MouseWheelListener {
     private final Logger LOGGER = LoggerFactory.getLogger(JDateMouseWheelListener.class);
 
     private static Consumer<MouseWheelEvent>  mouseWheelEventAction = null;

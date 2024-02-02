@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.function.Consumer;
 
-public class JDateMouseListener implements MouseListener {
+public final class JDateMouseListener implements MouseListener {
     private final Logger LOGGER = LoggerFactory.getLogger(JDateMouseListener.class);
 
     private static Consumer<MouseEvent> mouseClickedAction = null;
