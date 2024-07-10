@@ -80,13 +80,13 @@ public class ProjectGenerator extends JPanel implements ActionListener {
 
     private void generateProject(String path) throws IOException {
         // generate folders
-        File assetsDirectory = new File(path, "Assets");
-        File musicDirectory = new File(path, "Music");
-        File savesDirectory = new File(path, "Saves");
-        File srcFolder = new File(path, "src");
+        File assetsDirectory = new File(path, Constants.FileContent.ASSETS_DIRECTORY_NAME);
+        File musicDirectory = new File(path, Constants.FileContent.MUSIC_DIRECTORY_NAME);
+        File savesDirectory = new File(path, Constants.FileContent.SAVES_DIRECTORY_NAME);
+        File srcFolder = new File(path, Constants.FileContent.SRC_DIRECTORY_NAME);
 
-        FileWriter writer = new FileWriter(path + "/LICENSE.txt");
-        writer.write("bruh");
+        FileWriter writer = new FileWriter(path + "/" + Constants.FileContent.LICENSE_FILE_NAME);
+        writer.write(Constants.FileContent.LICENSE_CONTENT);
         writer.close();
 
         if (!assetsDirectory.mkdirs() || ! musicDirectory.mkdirs() || !savesDirectory.mkdirs() || !srcFolder.mkdirs()) {{
@@ -95,12 +95,12 @@ public class ProjectGenerator extends JPanel implements ActionListener {
         }}
 
         // gen src content
-        File scriptsDirectory = new File(path + "/src", "Scripts");
+        File scriptsDirectory = new File(path + "/src", Constants.FileContent.SCRIPTS_DIRECTORY_NAME);
 
         // write gameJson content
-        writer = new FileWriter(path + "/src" + "/game.json");
+        writer = new FileWriter(path + "/src/" + Constants.FileContent.GAME_FILE_NAME);
 
-        writer.write(Constants.FileContent.GAMEJSON_CONTENT);
+        writer.write(Constants.FileContent.GAME_FILE_CONTENT);
 
         writer.close();
 
