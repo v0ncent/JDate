@@ -6,6 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 
+/**
+ * JDate Main Class.
+ */
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
@@ -13,6 +16,7 @@ public class Main {
 
     public static void main(String[] args) {
         LOGGER.info("Starting JDate....");
+        LOGGER.info(Constants.ApplicationInfo.STARTUP_LOGO);
 
         APPLICATION_WINDOW.setName(Constants.JFrameConstants.WINDOW_NAME);
         APPLICATION_WINDOW.setTitle(Constants.JFrameConstants.WINDOW_NAME);
@@ -22,10 +26,13 @@ public class Main {
 
         initComponents();
 
-        // NOTE THAT THIS MUST BE CALLED LAST
+        // NOTE THAT THIS MUST BE CALLED LAST TO ENSURE ALL NEEDED COMPONENTS ARE ADDED BEFORE RENDERING.
         APPLICATION_WINDOW.setVisible(true);
     }
 
+    /**
+     * Adds components to the application window to be rendered on startup.
+     */
     private static void initComponents() {
         APPLICATION_WINDOW.add(new ProjectGenerator());
     }
