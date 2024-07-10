@@ -34,6 +34,7 @@ public class ProjectGenerator extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // on button clicked, generate project and content at specified path
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
@@ -63,6 +64,7 @@ public class ProjectGenerator extends JPanel implements ActionListener {
             return;
         }
 
+        // create directory and populate project with content
         if (projectDirectory.mkdirs()) {
 
             try {
@@ -78,6 +80,11 @@ public class ProjectGenerator extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Generates JDate project content.
+     * @param path Path of project directory to populate.
+     * @throws IOException If files cannot be generated and written to.
+     */
     private void generateProject(String path) throws IOException {
         // generate folders
         File assetsDirectory = new File(path, Constants.FileContent.ASSETS_DIRECTORY_NAME);
@@ -89,6 +96,7 @@ public class ProjectGenerator extends JPanel implements ActionListener {
         writer.write(Constants.FileContent.LICENSE_CONTENT);
         writer.close();
 
+        // check that they actually generated
         if (!assetsDirectory.mkdirs() || ! musicDirectory.mkdirs() || !savesDirectory.mkdirs() || !srcFolder.mkdirs()) {{
             WindowUtil.showErrorWindow( "Error generating the required project content.");
             return;
@@ -104,6 +112,7 @@ public class ProjectGenerator extends JPanel implements ActionListener {
 
         writer.close();
 
+        // check if directory was generated
         if (!scriptsDirectory.mkdirs()) {
             WindowUtil.showErrorWindow( "Error generating the required project content.");
         }
