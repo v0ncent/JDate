@@ -12,29 +12,39 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 
+/**
+ * Project generator section of the MainWindow's UI.
+ */
 public class ProjectGenerator extends JPanel implements ActionListener {
+    // The actual text boxes on the UI
     private final JTextField filePath = new JTextField(20);
     private final JTextField nameField = new JTextField(20);
 
     public ProjectGenerator() {
+        // so it's surrounded in a nice box
         setLayout(new BorderLayout());
 
+        // Add a nice title on top of its ui section
         JLabel titleLabel = new JLabel(Constants.ProjectGeneratorConstants.PROJECTGEN_PANEL_TITLE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(titleLabel, BorderLayout.NORTH);
 
+        // makes stuff look really nice, somehow :0
         JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
+        // this is the text next to the text field
         JLabel projectNameLabel = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_NAME_LABEL_TEXT);
         inputPanel.add(projectNameLabel);
         inputPanel.add(nameField);
 
+        // ditto but for proj location
         JLabel projectLocationLabel = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_LABEL_TEXT);
         inputPanel.add(projectLocationLabel);
         inputPanel.add(filePath);
 
+        // da buttons
         JButton chooseButton = new JButton(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_BUTTON_TEXT);
         chooseButton.addActionListener(this);
         inputPanel.add(chooseButton);

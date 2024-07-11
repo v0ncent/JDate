@@ -22,12 +22,20 @@ public class JDateEngine {
 
     }
 
+    /**
+     * Loads the passed files into the JDateEngine.
+     * @param files Files to be loaded into the JDateEngine.
+     */
     public void acceptFiles(File[] files) {
         this.project = files;
 
         LOGGER.info("Engine has accepted files: {}", Arrays.toString(files));
     }
 
+    /**
+     * Gets the singleton instance of the JDateEngine Object.
+     * @return The singleton instance of the JDateEngine Object.
+     */
     public static JDateEngine getInstance() {
         if (jDateEngine == null) {
             jDateEngine = new JDateEngine();

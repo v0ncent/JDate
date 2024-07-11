@@ -7,6 +7,7 @@ import java.util.List;
  * A code representation of a generated JDate Project and utilities for working with them.
  */
 public class JDateProject {
+    // All of these are a required element of a JDate project.
     private boolean hasAssetsFolder = false;
     private boolean hasMusicFolder = false;
     private boolean hasSRCFolder = false;
@@ -66,6 +67,11 @@ public class JDateProject {
         this.srcContainsGameJson = srcContainsGameJson;
     }
 
+    /**
+     * Determines the missing files / directories of a passed JDate project.
+     * @param project Project to determine missing files / directories of.
+     * @return A string containing the missing JDate files seperated with a , .
+     */
     public static String getMissingElement(JDateProject project) {
         final List<String> missingItems = new ArrayList<>();
 

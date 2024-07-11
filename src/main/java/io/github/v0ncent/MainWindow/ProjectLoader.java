@@ -10,24 +10,31 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The project loader section of the MainWindow's UI.
+ */
 public class ProjectLoader extends JPanel implements ActionListener {
+    // The list of elements at the end when it's done looking at all the files
     private final DefaultListModel<String> listModel;
+
     private final JProgressBar progressBar;
 
     public ProjectLoader() {
         setLayout(new BorderLayout());
 
+        // the actual part where you are choosing the directory
         JPanel inputPanel = new JPanel();
-        JButton chooseButton = new JButton("Load Project");
+        JButton chooseButton = new JButton(Constants.ProjectLoaderConstants.CHOOSE_BUTTON_TEXT);
         progressBar = new JProgressBar();
 
         inputPanel.add(chooseButton);
         inputPanel.add(progressBar);
 
         listModel = new DefaultListModel<>();
+
+        // scroll pane is if its long af you can get a scroll bar
         JList<String> fileList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(fileList);
 
@@ -37,6 +44,10 @@ public class ProjectLoader extends JPanel implements ActionListener {
         chooseButton.addActionListener(this);
     }
 
+    /**
+     * Loads the given directory into the DirectoryLoader subroutine.
+     * @param directory Chosen directory.
+     */
     private void loadDirectory(File directory) {
         listModel.clear();
 
@@ -57,12 +68,16 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
         int result = fileChooser.showOpenDialog(null);
 
+        // if it's a valid file chosen (this case a directory)
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDirectory = fileChooser.getSelectedFile();
             loadDirectory(selectedDirectory);
         }
     }
 
+    /**
+     * Subroutine for loading directory contents.
+     */
     private class DirectoryLoader extends SwingWorker<Void, String> {
         private final File directory;
 
@@ -79,11 +94,18 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
         @Override
         protected Void doInBackground() {
-            loadDirectoryContents(directory, "");
+            loadDirectoryContents(directory, "-");
             return null;
         }
 
+        /**
+         * Loops through all contents of the directory and increases progress bar whilst doing so.
+         * @param directory Chosen directory to load contents of.
+         * @param indent How the file tree should be spaced when listed in UI.
+         */
         private void loadDirectoryContents(File directory, String indent) {
+            // loop through all the files and slowly increase progress bar as you do :0
+            // check if we have needed JDate project files too
             File[] files = directory.listFiles();
 
             if (files != null) {
@@ -107,7 +129,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
                     }
 
                     if (file.isDirectory()) {
-                        loadDirectoryContents(file, indent + "  ");
+                        loadDirectoryContents(file, indent + "|_");
                     }
 
                     filesProcessed++;

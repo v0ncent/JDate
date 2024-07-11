@@ -271,4 +271,12 @@ public class Constants {
                 "     @@@@@@@@@@@@@@@@@          @@@@@@@@@@@@@@@@@                    @@@@@@@              @@@@@@@          @@@@@@@@@@@@                     @@@@@@@@@@@@@@@     \n" +
                 "        @@@@@@@@@@@             @@@@@@                                    @                @                    @@@@@@@                           @@@@     ";
     }
+
+    /**
+     * Constants pertaining to the ProjectLoader UI element.
+     * @see io.github.v0ncent.MainWindow.ProjectLoader
+     */
+    public static final class ProjectLoaderConstants {
+        public static final String CHOOSE_BUTTON_TEXT = "Load Project";
+    }
 }
