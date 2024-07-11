@@ -1,5 +1,10 @@
 package io.github.v0ncent.MainWindow;
 
+import io.github.v0ncent.Constants;
+import io.github.v0ncent.Engine.JDateEngine;
+import io.github.v0ncent.Engine.Util.JDateProject;
+import io.github.v0ncent.WindowUtil;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -16,7 +21,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
         setLayout(new BorderLayout());
 
         JPanel inputPanel = new JPanel();
-        JButton chooseButton = new JButton("Choose Directory");
+        JButton chooseButton = new JButton("Load Project");
         progressBar = new JProgressBar();
 
         inputPanel.add(chooseButton);
@@ -34,9 +39,12 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
     private void loadDirectory(File directory) {
         listModel.clear();
+
         if (directory.exists() && directory.isDirectory()) {
+
             DirectoryLoader loader = new DirectoryLoader(directory);
             loader.execute();
+
         } else {
             JOptionPane.showMessageDialog(this, "Invalid directory path", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -46,7 +54,9 @@ public class ProjectLoader extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
         int result = fileChooser.showOpenDialog(null);
+
         if (result == JFileChooser.APPROVE_OPTION) {
             File selectedDirectory = fileChooser.getSelectedFile();
             loadDirectory(selectedDirectory);
@@ -54,10 +64,17 @@ public class ProjectLoader extends JPanel implements ActionListener {
     }
 
     private class DirectoryLoader extends SwingWorker<Void, String> {
-        private File directory;
+        private final File directory;
+
+        // logical object for determining if we are given a valid project or not
+        private final JDateProject project = new JDateProject();
+
+        // project files
+        private File[] files;
 
         public DirectoryLoader(File directory) {
             this.directory = directory;
+            this.files = directory.listFiles();
         }
 
         @Override
@@ -68,19 +85,35 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
         private void loadDirectoryContents(File directory, String indent) {
             File[] files = directory.listFiles();
+
             if (files != null) {
-                Arrays.sort(files);
                 setProgress(0);
+
                 int totalFiles = files.length;
                 int filesProcessed = 0;
+
                 for (File file : files) {
                     publish(indent + file.getName());
+
+                    // check if it's a JDate necessary file
+                    switch (file.getName()) {
+                        case Constants.FileContent.ASSETS_DIRECTORY_NAME -> project.setHasAssetsFolder(true);
+                        case Constants.FileContent.MUSIC_DIRECTORY_NAME -> project.setHasMusicFolder(true);
+                        case Constants.FileContent.SAVES_DIRECTORY_NAME -> project.setHasSavesFolder(true);
+                        case Constants.FileContent.SRC_DIRECTORY_NAME -> project.setHasSRCFolder(true);
+                        case Constants.FileContent.SCRIPTS_DIRECTORY_NAME -> project.setSrcFolderHasScriptsFolder(true);
+                        case Constants.FileContent.GAME_FILE_NAME -> project.setSrcContainsGameJson(true);
+                        default -> {}
+                    }
+
                     if (file.isDirectory()) {
                         loadDirectoryContents(file, indent + "  ");
                     }
+
                     filesProcessed++;
                     setProgress((int) ((double) filesProcessed / totalFiles * 100));
                 }
+
             }
         }
 
@@ -93,6 +126,15 @@ public class ProjectLoader extends JPanel implements ActionListener {
         @Override
         protected void done() {
             progressBar.setValue(100);
+
+            // at end of subroutine, if it's a valid jdate project, pass to our engine.
+            if (project.isJDateProject()) {
+                JDateEngine.getInstance().acceptFiles(files);
+            } else {
+                WindowUtil.showErrorWindow(String.format("Not a valid JDate project, missing: %s", JDateProject.getMissingElement(project)));
+            }
         }
+
     }
+
 }
