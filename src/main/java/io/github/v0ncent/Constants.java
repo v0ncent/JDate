@@ -19,10 +19,11 @@ public class Constants {
      * @see io.github.v0ncent.MainWindow.ProjectGenerator
      */
     public static final class ProjectGeneratorConstants {
+        public static final String PROJECTGEN_PANEL_TITLE = "Generate Project";
         public static final String PROJECT_NAME_FIELD_PLACEHOLDER_TEXT = "Enter Project Name";
         public static final String PROJECT_NAME_LABEL_TEXT = "Project Name";
         public static final String PROJECT_LOCATION_LABEL_TEXT = "Project Location";
-        public static final String PROJECT_LOCATION_BUTTON_TEXT = "Choose Project Location";
+        public static final String PROJECT_LOCATION_BUTTON_TEXT = "Choose...";
     }
 
     /**

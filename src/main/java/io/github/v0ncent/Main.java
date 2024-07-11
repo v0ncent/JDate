@@ -30,6 +30,7 @@ public class Main {
 
         // NOTE THAT THIS MUST BE CALLED LAST TO ENSURE ALL NEEDED COMPONENTS ARE ADDED BEFORE RENDERING.
         APPLICATION_WINDOW.setVisible(true);
+        APPLICATION_WINDOW.pack();
     }
 
     /**

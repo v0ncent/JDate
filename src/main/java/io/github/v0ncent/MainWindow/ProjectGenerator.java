@@ -19,27 +19,25 @@ public class ProjectGenerator extends JPanel implements ActionListener {
     public ProjectGenerator() {
         setLayout(new BorderLayout());
 
-        JLabel titleLabel = new JLabel("Generate Project");
+        JLabel titleLabel = new JLabel(Constants.ProjectGeneratorConstants.PROJECTGEN_PANEL_TITLE);
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
         add(titleLabel, BorderLayout.NORTH);
 
-        JPanel inputPanel = new JPanel();
-        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JLabel projectName = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_NAME_LABEL_TEXT);
-        nameField.setText(Constants.ProjectGeneratorConstants.PROJECT_NAME_FIELD_PLACEHOLDER_TEXT);
-
-        inputPanel.add(projectName);
+        JLabel projectNameLabel = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_NAME_LABEL_TEXT);
+        inputPanel.add(projectNameLabel);
         inputPanel.add(nameField);
 
-        inputPanel.add(new JLabel(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_LABEL_TEXT));
+        JLabel projectLocationLabel = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_LABEL_TEXT);
+        inputPanel.add(projectLocationLabel);
         inputPanel.add(filePath);
 
-        JButton choose = new JButton(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_BUTTON_TEXT);
-        inputPanel.add(choose);
-
-        choose.addActionListener(this);
+        JButton chooseButton = new JButton(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_BUTTON_TEXT);
+        chooseButton.addActionListener(this);
+        inputPanel.add(chooseButton);
 
         add(inputPanel, BorderLayout.CENTER);
     }

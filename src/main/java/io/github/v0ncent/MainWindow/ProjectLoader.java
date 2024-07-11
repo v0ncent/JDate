@@ -15,28 +15,19 @@ public class ProjectLoader extends JPanel implements ActionListener {
     public ProjectLoader() {
         setLayout(new BorderLayout());
 
-        // Title Label
-        JLabel titleLabel = new JLabel("Load Project");
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
-        add(titleLabel, BorderLayout.NORTH);
-
-        // Input Panel with choose button and progress bar
-        JPanel inputPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel inputPanel = new JPanel();
         JButton chooseButton = new JButton("Choose Directory");
         progressBar = new JProgressBar();
 
         inputPanel.add(chooseButton);
         inputPanel.add(progressBar);
 
-        // File List
         listModel = new DefaultListModel<>();
         JList<String> fileList = new JList<>(listModel);
         JScrollPane scrollPane = new JScrollPane(fileList);
 
-        // Adding components to the main panel
-        add(inputPanel, BorderLayout.CENTER);
-        add(scrollPane, BorderLayout.SOUTH);
+        add(inputPanel, BorderLayout.NORTH);
+        add(scrollPane, BorderLayout.CENTER);
 
         chooseButton.addActionListener(this);
     }
@@ -63,7 +54,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
     }
 
     private class DirectoryLoader extends SwingWorker<Void, String> {
-        private final File directory;
+        private File directory;
 
         public DirectoryLoader(File directory) {
             this.directory = directory;
@@ -93,7 +84,6 @@ public class ProjectLoader extends JPanel implements ActionListener {
             }
         }
 
-        @Override
         protected void process(List<String> chunks) {
             for (String name : chunks) {
                 listModel.addElement(name);
@@ -106,5 +96,3 @@ public class ProjectLoader extends JPanel implements ActionListener {
         }
     }
 }
-
-
