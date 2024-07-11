@@ -4,6 +4,7 @@ import io.github.v0ncent.Constants;
 import io.github.v0ncent.WindowUtil;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -16,20 +17,31 @@ public class ProjectGenerator extends JPanel implements ActionListener {
     private final JTextField nameField = new JTextField(20);
 
     public ProjectGenerator() {
-        JLabel projectName = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_NAME_LABEL_TEXT);
+        setLayout(new BorderLayout());
 
+        JLabel titleLabel = new JLabel("Generate Project");
+        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        add(titleLabel, BorderLayout.NORTH);
+
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
+
+        JLabel projectName = new JLabel(Constants.ProjectGeneratorConstants.PROJECT_NAME_LABEL_TEXT);
         nameField.setText(Constants.ProjectGeneratorConstants.PROJECT_NAME_FIELD_PLACEHOLDER_TEXT);
 
-        add(projectName);
-        add(nameField);
+        inputPanel.add(projectName);
+        inputPanel.add(nameField);
 
-        add(new JLabel(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_LABEL_TEXT));
-        add(filePath);
+        inputPanel.add(new JLabel(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_LABEL_TEXT));
+        inputPanel.add(filePath);
 
         JButton choose = new JButton(Constants.ProjectGeneratorConstants.PROJECT_LOCATION_BUTTON_TEXT);
-        add(choose);
+        inputPanel.add(choose);
 
         choose.addActionListener(this);
+
+        add(inputPanel, BorderLayout.CENTER);
     }
 
     @Override
@@ -40,19 +52,19 @@ public class ProjectGenerator extends JPanel implements ActionListener {
 
         int returnValue = fileChooser.showOpenDialog(this);
         if (returnValue != JFileChooser.APPROVE_OPTION) {
-            WindowUtil.showErrorWindow( "No Directory Chosen");
+            WindowUtil.showErrorWindow("No Directory Chosen");
             return;
         }
 
         File selectedFile = fileChooser.getSelectedFile();
         filePath.setText(selectedFile.getAbsolutePath());
 
-        // check project name before genning project
+        // check project name before generating project
         if (nameField.getText() == null ||
                 Objects.equals(nameField.getText(), Constants.ProjectGeneratorConstants.PROJECT_NAME_FIELD_PLACEHOLDER_TEXT)
                 || nameField.getText().isEmpty()) {
 
-            WindowUtil.showErrorWindow( "You must set a name for your project!");
+            WindowUtil.showErrorWindow("You must set a name for your project!");
             return;
         }
 
@@ -60,31 +72,24 @@ public class ProjectGenerator extends JPanel implements ActionListener {
         File projectDirectory = new File(selectedFile, nameField.getText());
 
         if (projectDirectory.exists()) {
-            WindowUtil.showErrorWindow( "There is an existing project at " + projectDirectory.getAbsolutePath());
+            WindowUtil.showErrorWindow("There is an existing project at " + projectDirectory.getAbsolutePath());
             return;
         }
 
         // create directory and populate project with content
         if (projectDirectory.mkdirs()) {
-
             try {
                 generateProject(projectDirectory.getAbsolutePath());
             } catch (IOException ex) {
-                WindowUtil.showErrorWindow( "Error generating the required project content.");
+                WindowUtil.showErrorWindow("Error generating the required project content.");
             }
 
-            WindowUtil.showErrorWindow( "project generated at: " + projectDirectory.getAbsolutePath());
+            WindowUtil.showErrorWindow("project generated at: " + projectDirectory.getAbsolutePath());
         } else {
-            WindowUtil.showErrorWindow( "Error generating the project.");
+            WindowUtil.showErrorWindow("Error generating the project.");
         }
-
     }
 
-    /**
-     * Generates JDate project content.
-     * @param path Path of project directory to populate.
-     * @throws IOException If files cannot be generated and written to.
-     */
     private void generateProject(String path) throws IOException {
         // generate folders
         File assetsDirectory = new File(path, Constants.FileContent.ASSETS_DIRECTORY_NAME);
@@ -97,24 +102,24 @@ public class ProjectGenerator extends JPanel implements ActionListener {
         writer.close();
 
         // check that they actually generated
-        if (!assetsDirectory.mkdirs() || ! musicDirectory.mkdirs() || !savesDirectory.mkdirs() || !srcFolder.mkdirs()) {{
-            WindowUtil.showErrorWindow( "Error generating the required project content.");
+        if (!assetsDirectory.mkdirs() || !musicDirectory.mkdirs() || !savesDirectory.mkdirs() || !srcFolder.mkdirs()) {
+            WindowUtil.showErrorWindow("Error generating the required project content.");
             return;
-        }}
+        }
 
-        // gen src content
+        // generate src content
         File scriptsDirectory = new File(path + "/src", Constants.FileContent.SCRIPTS_DIRECTORY_NAME);
 
         // write gameJson content
         writer = new FileWriter(path + "/src/" + Constants.FileContent.GAME_FILE_NAME);
-
         writer.write(Constants.FileContent.GAME_FILE_CONTENT);
-
         writer.close();
 
         // check if directory was generated
         if (!scriptsDirectory.mkdirs()) {
-            WindowUtil.showErrorWindow( "Error generating the required project content.");
+            WindowUtil.showErrorWindow("Error generating the required project content.");
         }
     }
 }
+
+

@@ -1,10 +1,12 @@
 package io.github.v0ncent;
 
 import io.github.v0ncent.MainWindow.ProjectGenerator;
+import io.github.v0ncent.MainWindow.ProjectLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * JDate Main Class.
@@ -34,7 +36,13 @@ public class Main {
      * Adds components to the application window to be rendered on startup.
      */
     private static void initComponents() {
-        APPLICATION_WINDOW.add(new ProjectGenerator());
+        final ProjectLoader loader = new ProjectLoader();
+        final ProjectGenerator generator = new ProjectGenerator();
+
+        // Adding to a split pane for better space management
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, loader, generator);
+        splitPane.setDividerLocation(300); // initial divider location
+        APPLICATION_WINDOW.add(splitPane, BorderLayout.CENTER);
     }
 
 }
