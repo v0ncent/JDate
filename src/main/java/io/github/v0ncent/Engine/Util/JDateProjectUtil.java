@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A code representation of a generated JDate Project and utilities for working with them.
+ * Utility for working with JDate Projects.
  */
-public class JDateProject {
+public class JDateProjectUtil {
     // All of these are a required element of a JDate project.
     private boolean hasAssetsFolder = false;
     private boolean hasMusicFolder = false;
@@ -83,7 +83,7 @@ public class JDateProject {
      * @param project Project to determine missing files / directories of.
      * @return A string containing the missing JDate files seperated with a , .
      */
-    public static String getMissingElement(JDateProject project) {
+    public static String getMissingElement(JDateProjectUtil project) {
         final List<String> missingItems = new ArrayList<>();
 
         if (!project.hasAssetsFolder) {

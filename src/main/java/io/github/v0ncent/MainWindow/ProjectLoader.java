@@ -2,7 +2,7 @@ package io.github.v0ncent.MainWindow;
 
 import io.github.v0ncent.Constants;
 import io.github.v0ncent.Engine.JDateEngine;
-import io.github.v0ncent.Engine.Util.JDateProject;
+import io.github.v0ncent.Engine.Util.JDateProjectUtil;
 import io.github.v0ncent.WindowUtil;
 
 import javax.swing.*;
@@ -82,7 +82,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
         private final File directory;
 
         // logical object for determining if we are given a valid project or not
-        private final JDateProject project = new JDateProject();
+        private final JDateProjectUtil project = new JDateProjectUtil();
 
         // project files
         private File[] files;
@@ -154,7 +154,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
             if (project.isJDateProject()) {
                 JDateEngine.getInstance().acceptFiles(files, directory);
             } else {
-                WindowUtil.showErrorWindow(String.format("Not a valid JDate project, missing: %s", JDateProject.getMissingElement(project)));
+                WindowUtil.showErrorWindow(String.format("Not a valid JDate project, missing: %s", JDateProjectUtil.getMissingElement(project)));
             }
         }
 
