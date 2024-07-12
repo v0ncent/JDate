@@ -14,9 +14,10 @@ public class JDateProject {
     private boolean hasSavesFolder = false;
     private boolean srcFolderHasScriptsFolder = false;
     private boolean srcContainsGameJson = false;
+    private boolean srcContainsFunctionsJavaFile = false;
 
     public boolean isJDateProject() {
-        return hasAssetsFolder && hasMusicFolder && hasSRCFolder && srcFolderHasScriptsFolder && srcContainsGameJson && hasSavesFolder;
+        return hasAssetsFolder && hasMusicFolder && hasSRCFolder && srcFolderHasScriptsFolder && srcContainsGameJson && hasSavesFolder && srcContainsFunctionsJavaFile;
     }
 
     public boolean isHasSavesFolder() {
@@ -67,6 +68,14 @@ public class JDateProject {
         this.srcContainsGameJson = srcContainsGameJson;
     }
 
+    public boolean isSrcContainsFunctionsJavaFile() {
+        return srcContainsFunctionsJavaFile;
+    }
+
+    public void setSrcContainsFunctionsJavaFile(boolean srcContainsFunctionsJavaFile) {
+        this.srcContainsFunctionsJavaFile = srcContainsFunctionsJavaFile;
+    }
+
     /**
      * Determines the missing files / directories of a passed JDate project.
      * @param project Project to determine missing files / directories of.
@@ -97,6 +106,10 @@ public class JDateProject {
 
         if (!project.hasSavesFolder) {
             missingItems.add("Saves");
+        }
+
+        if (!project.srcContainsFunctionsJavaFile) {
+            missingItems.add("src/Functions.java");
         }
 
         if (!missingItems.isEmpty()) {

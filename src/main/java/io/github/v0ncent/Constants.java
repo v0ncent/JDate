@@ -242,6 +242,14 @@ public class Constants {
         public static final String SCRIPTS_DIRECTORY_NAME = "Scripts";
         public static final String GAME_FILE_NAME = "game.json";
         public static final String LICENSE_FILE_NAME = "LICENSE.txt";
+        public static final String JAVA_FUNCTIONS_FILE_NAME = "Functions.java";
+        public static final String JAVA_FUNCTIONS_FILE_CONTENT = "public class Functions {\n" +
+                        "\n" +
+                        "    public void exampleFunction(String args) {\n" +
+                        "        System.out.println(args);\n" +
+                        "    }\n" +
+                        "\n" +
+                        "}";
     }
 
     /**
