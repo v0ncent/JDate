@@ -85,7 +85,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
         private final JDateProjectUtil project = new JDateProjectUtil();
 
         // project files
-        private File[] files;
+        private final File[] files;
 
         public DirectoryLoader(File directory) {
             this.directory = directory;
