@@ -1,5 +1,7 @@
 package io.github.v0ncent.Engine.Util;
 
+import io.github.v0ncent.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,31 +87,31 @@ public class JDateProject {
         final List<String> missingItems = new ArrayList<>();
 
         if (!project.hasAssetsFolder) {
-            missingItems.add("Assets");
+            missingItems.add(Constants.FileContent.ASSETS_DIRECTORY_NAME);
         }
 
         if (!project.hasMusicFolder) {
-            missingItems.add("Music");
+            missingItems.add(Constants.FileContent.MUSIC_DIRECTORY_NAME);
         }
 
         if (!project.hasSRCFolder) {
-            missingItems.add("src");
+            missingItems.add(Constants.FileContent.SRC_DIRECTORY_NAME);
         }
 
         if (!project.srcFolderHasScriptsFolder) {
-            missingItems.add("src/scripts");
+            missingItems.add(Constants.FileContent.SCRIPT_DIRECTORY_PATH);
         }
 
         if (!project.srcContainsGameJson) {
-            missingItems.add("src/game.json");
+            missingItems.add(Constants.FileContent.GAME_JSON_FILE_PATH);
         }
 
         if (!project.hasSavesFolder) {
-            missingItems.add("Saves");
+            missingItems.add(Constants.FileContent.SAVES_DIRECTORY_NAME);
         }
 
         if (!project.srcContainsFunctionsJavaFile) {
-            missingItems.add("src/Functions.java");
+            missingItems.add(Constants.FileContent.FUNCTIONS_JAVA_FILE_PATH);
         }
 
         if (!missingItems.isEmpty()) {

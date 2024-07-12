@@ -16,7 +16,9 @@ public class JDateEngine {
     // with a million instances of a game engine. that wouldn't be good.
     private static JDateEngine jDateEngine;
 
-    private File[] project;
+    private File[] projectDirectoryContents;
+
+    private File projectDirectory;
 
     private JDateEngine() {
 
@@ -24,12 +26,15 @@ public class JDateEngine {
 
     /**
      * Loads the passed files into the JDateEngine.
-     * @param files Files to be loaded into the JDateEngine.
+     * @param projectDirectoryContent Files to be loaded into the JDateEngine.
+     * @param projectDirectory Source Folder of JDate project.
      */
-    public void acceptFiles(File[] files) {
-        this.project = files;
+    public void acceptFiles(File[] projectDirectoryContent, File projectDirectory) {
+        this.projectDirectoryContents = projectDirectoryContent;
+        this.projectDirectory = projectDirectory;
 
-        LOGGER.info("Engine has accepted files: {}", Arrays.toString(files));
+        LOGGER.info("Engine has accepted project: {}", projectDirectory.getAbsolutePath());
+        LOGGER.info("Engine has accepted files: {}", Arrays.toString(projectDirectoryContent));
     }
 
     /**

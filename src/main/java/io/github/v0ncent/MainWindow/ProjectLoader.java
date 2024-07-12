@@ -125,6 +125,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
                         case Constants.FileContent.SRC_DIRECTORY_NAME -> project.setHasSRCFolder(true);
                         case Constants.FileContent.SCRIPTS_DIRECTORY_NAME -> project.setSrcFolderHasScriptsFolder(true);
                         case Constants.FileContent.GAME_FILE_NAME -> project.setSrcContainsGameJson(true);
+                        case Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME -> project.setSrcContainsFunctionsJavaFile(true);
                         default -> {}
                     }
 
@@ -151,7 +152,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
             // at end of subroutine, if it's a valid jdate project, pass to our engine.
             if (project.isJDateProject()) {
-                JDateEngine.getInstance().acceptFiles(files);
+                JDateEngine.getInstance().acceptFiles(files, directory);
             } else {
                 WindowUtil.showErrorWindow(String.format("Not a valid JDate project, missing: %s", JDateProject.getMissingElement(project)));
             }
