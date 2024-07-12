@@ -33,4 +33,44 @@ public class JDateProject {
 
         this.projectName = this.gameJSON.name();
     }
+
+    public File[] getAssets() {
+        return assets;
+    }
+
+    public File[] getMusic() {
+        return music;
+    }
+
+    public File[] getSaves() {
+        return saves;
+    }
+
+    public File[] getSrc() {
+        return src;
+    }
+
+    public File[] getScripts() {
+        return scripts;
+    }
+
+    public File getGameJSONasFile() {
+        return gameJSONasFile;
+    }
+
+    public GameJSON getGameJSON() {
+        return gameJSON;
+    }
+
+    public File getFunctionsAsFile() {
+        return functionsAsFile;
+    }
+
+    public Functions getFunctions() {
+        return functions;
+    }
+
+    public String getProjectName() {
+        return projectName;
+    }
 }
