@@ -248,6 +248,8 @@ public class ProjectLoader extends JPanel implements ActionListener {
                 } catch (IOException | ClassNotFoundException e) {
                     WindowUtil.showErrorWindow("Error loading project files: " + e.getMessage());
                     e.printStackTrace();
+                } catch (Exception e) {
+
                 }
 
             } else {
