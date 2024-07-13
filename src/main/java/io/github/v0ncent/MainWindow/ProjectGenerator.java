@@ -121,6 +121,7 @@ public class ProjectGenerator extends JPanel implements ActionListener {
         // write gameJson content
         writer = new FileWriter(path + "/src/" + Constants.FileContent.GAME_FILE_NAME);
         writer.write(Constants.FileContent.GAME_FILE_CONTENT);
+        writer.close();
 
         // create and write java file
         writer = new FileWriter(path + "/src/" + Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME);

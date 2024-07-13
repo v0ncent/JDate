@@ -253,6 +253,7 @@ public class Constants {
         public static final String GAME_JSON_FILE_PATH = "src/game.json";
         public static final String FUNCTIONS_JAVA_FILE_PATH = "src/Functions.java";
         public static final String SCRIPT_DIRECTORY_PATH = "src/Scripts";
+        public static final String COMPILED_FUNCTIONS_CLASS_DIRECTORY = "CompiledFunctions";
     }
 
     /**

@@ -1,10 +1,8 @@
 package io.github.v0ncent.Engine;
 
+import io.github.v0ncent.Engine.JDateProject.JDateProject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.util.Arrays;
 
 /**
  * Singleton Instance of JDateEngine Object.
@@ -16,9 +14,7 @@ public class JDateEngine {
     // with a million instances of a game engine. that wouldn't be good.
     private static JDateEngine jDateEngine;
 
-    private File[] projectDirectoryContents;
-
-    private File projectDirectory;
+    private JDateProject project;
 
     private JDateEngine() {
 
@@ -26,15 +22,14 @@ public class JDateEngine {
 
     /**
      * Loads the passed files into the JDateEngine.
-     * @param projectDirectoryContent Files to be loaded into the JDateEngine.
-     * @param projectDirectory Source Folder of JDate project.
+     * @param project An instance of the JDate Object populated with user passed project content.
      */
-    public void acceptFiles(File[] projectDirectoryContent, File projectDirectory) {
-        this.projectDirectoryContents = projectDirectoryContent;
-        this.projectDirectory = projectDirectory;
+    public void acceptFiles(JDateProject project) {
+        // populate JDateProject from files passed.
+        this.project = project;
 
-        LOGGER.info("Engine has accepted project: {}", projectDirectory.getAbsolutePath());
-        LOGGER.info("Engine has accepted files: {}", Arrays.toString(projectDirectoryContent));
+        LOGGER.info("Engine has accepted project: {}", project.getProjectDirectory());
+        LOGGER.info("Engine has accepted files: {}", project);
     }
 
     /**

@@ -1,9 +1,10 @@
 package io.github.v0ncent.Engine.JDateProject;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
- * An in code representation of a actual JDate Project.
+ * An in code representation of an actual JDate Project.
  */
 public class JDateProject {
     private final File[] assets;
@@ -16,11 +17,15 @@ public class JDateProject {
     private final GameJSON gameJSON;
 
     private final File functionsAsFile;
-    private final Functions functions;
+    private final Class<?> functions;
+
+    private final File[] otherFiles;
+
+    private final File projectDirectory;
 
     private final String projectName;
 
-    public JDateProject(File[] assets, File[] music, File[] saves, File[] src, File[] scripts, File gameJSONasFile, GameJSON gameJSON, File functionsAsFile, Functions functions) {
+    public JDateProject(File[] assets, File[] music, File[] saves, File[] src, File[] scripts, File gameJSONasFile, GameJSON gameJSON, File functionsAsFile, Class<?> functions, File[] otherFiles, File projectDirectory) {
         this.assets = assets;
         this.music = music;
         this.saves = saves;
@@ -30,6 +35,8 @@ public class JDateProject {
         this.gameJSON = gameJSON;
         this.functionsAsFile = functionsAsFile;
         this.functions = functions;
+        this.otherFiles = otherFiles;
+        this.projectDirectory = projectDirectory;
 
         this.projectName = this.gameJSON.name();
     }
@@ -66,11 +73,37 @@ public class JDateProject {
         return functionsAsFile;
     }
 
-    public Functions getFunctions() {
+    public Class<?> getFunctions() {
         return functions;
     }
 
     public String getProjectName() {
         return projectName;
+    }
+
+    public File[] getOtherFiles() {
+        return otherFiles;
+    }
+
+    public File getProjectDirectory() {
+        return projectDirectory;
+    }
+
+    @Override
+    public String toString() {
+        return "JDateProject{" +
+                "assets=" + Arrays.toString(assets) +
+                ", music=" + Arrays.toString(music) +
+                ", saves=" + Arrays.toString(saves) +
+                ", src=" + Arrays.toString(src) +
+                ", scripts=" + Arrays.toString(scripts) +
+                ", gameJSONasFile=" + gameJSONasFile +
+                ", gameJSON=" + gameJSON +
+                ", functionsAsFile=" + functionsAsFile +
+                ", functions=" + functions +
+                ", otherFiles=" + Arrays.toString(otherFiles) +
+                ", projectDirectory=" + projectDirectory +
+                ", projectName='" + projectName + '\'' +
+                '}';
     }
 }
