@@ -108,6 +108,10 @@ public class JDateProject {
 
         }
 
+        if (this.startingScript == null) {
+            return Constants.StatusCodes.GameJsonValidationCodes.GAME_JSON_BAD_SCRIPT;
+        }
+
         return Constants.StatusCodes.GameJsonValidationCodes.GAME_JSON_OK;
     }
 
