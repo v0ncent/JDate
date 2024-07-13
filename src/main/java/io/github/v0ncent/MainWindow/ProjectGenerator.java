@@ -92,7 +92,7 @@ public class ProjectGenerator extends JPanel implements ActionListener {
                 WindowUtil.showErrorWindow("Error generating the required project content.");
             }
 
-            WindowUtil.showErrorWindow("project generated at: " + projectDirectory.getAbsolutePath());
+            WindowUtil.showInfoWindow("project generated at: " + projectDirectory.getAbsolutePath());
         } else {
             WindowUtil.showErrorWindow("Error generating the project.");
         }
@@ -121,6 +121,12 @@ public class ProjectGenerator extends JPanel implements ActionListener {
         // write gameJson content
         writer = new FileWriter(path + "/src/" + Constants.FileContent.GAME_FILE_NAME);
         writer.write(Constants.FileContent.GAME_FILE_CONTENT);
+        writer.close();
+
+        // create and write java file
+        writer = new FileWriter(path + "/src/" + Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME);
+        writer.write(Constants.FileContent.JAVA_FUNCTIONS_FILE_CONTENT);
+
         writer.close();
 
         // check if directory was generated
