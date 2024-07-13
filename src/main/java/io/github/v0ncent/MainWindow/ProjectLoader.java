@@ -186,11 +186,11 @@ public class ProjectLoader extends JPanel implements ActionListener {
             }
         }
 
-        private void compileFunctionsFile() {
+        private void compileFunctionsFile(String pathToFunctionsFile) {
             // compile java file via java compiler
             final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
-            // if we havent compiled a functions file before, create the jawn
+            // if we haven't compiled a functions file before, create the jawn
             final File compiledResultsDir = new File(Constants.FileContent.COMPILED_FUNCTIONS_CLASS_DIRECTORY);
 
             if (!compiledResultsDir.exists()) {
@@ -201,21 +201,21 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
             }
 
-            int compilationResult = compiler.run(null, null, null, "-d", Constants.FileContent.COMPILED_FUNCTIONS_CLASS_DIRECTORY, Constants.FileContent.FUNCTIONS_JAVA_FILE_PATH);
+            int compilationResult = compiler.run(null, null, null, "-d", Constants.FileContent.COMPILED_FUNCTIONS_CLASS_DIRECTORY, pathToFunctionsFile);
 
             if (compilationResult != 0) {
                 WindowUtil.showErrorWindow("Compilation of Functions Class failed.");
             }
         }
 
-        private Class<?> loadClass() throws MalformedURLException, ClassNotFoundException {
-            compileFunctionsFile();
+        private Class<?> loadClass(String pathToFunctionsFile) throws MalformedURLException, ClassNotFoundException {
+            compileFunctionsFile(pathToFunctionsFile);
 
             File classFile = new File(Constants.FileContent.COMPILED_FUNCTIONS_CLASS_DIRECTORY);
             URL[] url = {classFile.toURI().toURL()};
 
             URLClassLoader classLoader = new URLClassLoader(url);
-            return classLoader.loadClass(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME);
+            return classLoader.loadClass(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME.replace(".java", ""));
         }
 
         @Override
@@ -239,7 +239,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
                                     new ObjectMapper().readValue((File) projectFiles.get(Constants.FileContent.GAME_FILE_NAME), GameJSON.class),
                                     (File) projectFiles.get(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME),
                                     // compile users function file to usable class
-                                    loadClass(),
+                                    loadClass(((File) projectFiles.get(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME)).getAbsolutePath()),
                                     (File[]) projectFiles.get("OtherFiles"),
                                     directory
                             )
