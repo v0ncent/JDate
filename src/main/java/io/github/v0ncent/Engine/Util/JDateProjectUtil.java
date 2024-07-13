@@ -1,12 +1,14 @@
 package io.github.v0ncent.Engine.Util;
 
+import io.github.v0ncent.Constants;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A code representation of a generated JDate Project and utilities for working with them.
+ * Utility for working with JDate Projects.
  */
-public class JDateProject {
+public class JDateProjectUtil {
     // All of these are a required element of a JDate project.
     private boolean hasAssetsFolder = false;
     private boolean hasMusicFolder = false;
@@ -14,9 +16,10 @@ public class JDateProject {
     private boolean hasSavesFolder = false;
     private boolean srcFolderHasScriptsFolder = false;
     private boolean srcContainsGameJson = false;
+    private boolean srcContainsFunctionsJavaFile = false;
 
     public boolean isJDateProject() {
-        return hasAssetsFolder && hasMusicFolder && hasSRCFolder && srcFolderHasScriptsFolder && srcContainsGameJson && hasSavesFolder;
+        return hasAssetsFolder && hasMusicFolder && hasSRCFolder && srcFolderHasScriptsFolder && srcContainsGameJson && hasSavesFolder && srcContainsFunctionsJavaFile;
     }
 
     public boolean isHasSavesFolder() {
@@ -67,36 +70,48 @@ public class JDateProject {
         this.srcContainsGameJson = srcContainsGameJson;
     }
 
+    public boolean isSrcContainsFunctionsJavaFile() {
+        return srcContainsFunctionsJavaFile;
+    }
+
+    public void setSrcContainsFunctionsJavaFile(boolean srcContainsFunctionsJavaFile) {
+        this.srcContainsFunctionsJavaFile = srcContainsFunctionsJavaFile;
+    }
+
     /**
      * Determines the missing files / directories of a passed JDate project.
      * @param project Project to determine missing files / directories of.
      * @return A string containing the missing JDate files seperated with a , .
      */
-    public static String getMissingElement(JDateProject project) {
+    public static String getMissingElement(JDateProjectUtil project) {
         final List<String> missingItems = new ArrayList<>();
 
         if (!project.hasAssetsFolder) {
-            missingItems.add("Assets");
+            missingItems.add(Constants.FileContent.ASSETS_DIRECTORY_NAME);
         }
 
         if (!project.hasMusicFolder) {
-            missingItems.add("Music");
+            missingItems.add(Constants.FileContent.MUSIC_DIRECTORY_NAME);
         }
 
         if (!project.hasSRCFolder) {
-            missingItems.add("src");
+            missingItems.add(Constants.FileContent.SRC_DIRECTORY_NAME);
         }
 
         if (!project.srcFolderHasScriptsFolder) {
-            missingItems.add("src/scripts");
+            missingItems.add(Constants.FileContent.SCRIPT_DIRECTORY_PATH);
         }
 
         if (!project.srcContainsGameJson) {
-            missingItems.add("src/game.json");
+            missingItems.add(Constants.FileContent.GAME_JSON_FILE_PATH);
         }
 
         if (!project.hasSavesFolder) {
-            missingItems.add("Saves");
+            missingItems.add(Constants.FileContent.SAVES_DIRECTORY_NAME);
+        }
+
+        if (!project.srcContainsFunctionsJavaFile) {
+            missingItems.add(Constants.FileContent.FUNCTIONS_JAVA_FILE_PATH);
         }
 
         if (!missingItems.isEmpty()) {

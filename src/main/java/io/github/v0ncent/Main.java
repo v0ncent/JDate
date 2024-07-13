@@ -14,23 +14,23 @@ import java.awt.*;
 public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
-    private static final JFrame APPLICATION_WINDOW = new JFrame();
+    private static final JFrame MAIN_WINDOW = new JFrame();
 
     public static void main(String[] args) {
         LOGGER.info("Starting JDate....");
         LOGGER.info(Constants.ApplicationInfo.STARTUP_LOGO);
 
-        APPLICATION_WINDOW.setName(Constants.JFrameConstants.WINDOW_NAME);
-        APPLICATION_WINDOW.setTitle(Constants.JFrameConstants.WINDOW_NAME);
-        APPLICATION_WINDOW.setSize(Constants.JFrameConstants.WINDOW_SIZE);
-        APPLICATION_WINDOW.setResizable(true);
-        APPLICATION_WINDOW.setDefaultCloseOperation(Constants.JFrameConstants.CLOSE_OPERATION);
+        MAIN_WINDOW.setName(Constants.JFrameConstants.WINDOW_NAME);
+        MAIN_WINDOW.setTitle(Constants.JFrameConstants.WINDOW_NAME);
+        MAIN_WINDOW.setSize(Constants.JFrameConstants.WINDOW_SIZE);
+        MAIN_WINDOW.setResizable(true);
+        MAIN_WINDOW.setDefaultCloseOperation(Constants.JFrameConstants.CLOSE_OPERATION);
 
         initComponents();
 
         // NOTE THAT THIS MUST BE CALLED LAST TO ENSURE ALL NEEDED COMPONENTS ARE ADDED BEFORE RENDERING.
-        APPLICATION_WINDOW.setVisible(true);
-        APPLICATION_WINDOW.pack();
+        MAIN_WINDOW.setVisible(true);
+        MAIN_WINDOW.pack();
     }
 
     /**
@@ -43,7 +43,7 @@ public class Main {
         // Adding to a split pane for better space management
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, loader, generator);
         splitPane.setDividerLocation(300); // initial divider location
-        APPLICATION_WINDOW.add(splitPane, BorderLayout.CENTER);
+        MAIN_WINDOW.add(splitPane, BorderLayout.CENTER);
     }
 
 }

@@ -10,4 +10,12 @@ public final class WindowUtil {
     public static void showErrorWindow(String text) {
         JOptionPane.showMessageDialog(new JFrame(), text, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    /**
+     * Opens a JOption pane window and displays the given info message.
+     * @param text Info message.
+     */
+    public static void showInfoWindow(String text) {
+        JOptionPane.showMessageDialog(new JFrame(), text, "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
 }
