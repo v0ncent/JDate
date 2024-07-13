@@ -17,6 +17,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
@@ -159,7 +160,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
                             project.setSrcContainsFunctionsJavaFile(true);
                             projectFiles.put(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME, file);
                         }
-                        default -> projectFiles.put("OtherFiles", file.listFiles());
+                        default -> {}
                     }
 
                     if (file.isDirectory()) {
@@ -232,6 +233,12 @@ public class ProjectLoader extends JPanel implements ActionListener {
             if (project.isJDateProject()) {
 
                 try {
+                    LOGGER.info("{}", new ObjectMapper().readValue((File) projectFiles.get(Constants.FileContent.GAME_FILE_NAME), GameJSON.class).toString());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
                     JDateEngine.getInstance().acceptFiles(
                             new JDateProject(
                                     (File[]) projectFiles.get(Constants.FileContent.ASSETS_DIRECTORY_NAME),
@@ -244,7 +251,6 @@ public class ProjectLoader extends JPanel implements ActionListener {
                                     (File) projectFiles.get(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME),
                                     // compile users function file to usable class
                                     loadClass(((File) projectFiles.get(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME)).getAbsolutePath()),
-                                    (File[]) projectFiles.get("OtherFiles"),
                                     directory
                             )
                     );

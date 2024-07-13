@@ -24,8 +24,6 @@ public class JDateProject {
     private final File functionsAsFile;
     private final Class<?> functions;
 
-    private final File[] otherFiles;
-
     private final File projectDirectory;
 
     private final String projectName;
@@ -40,11 +38,10 @@ public class JDateProject {
      * @param gameJSON An instance of the GameJson Object with parsed json contents.
      * @param functionsAsFile Java Functions file as a File Object.
      * @param functions Compiled Functions file as a Class Object.
-     * @param otherFiles Any files that are not a part of the required ones.
      * @param projectDirectory Pointer to the project directory.
      * @throws Exception If there are any problems encountered during file compilation.
      */
-    public JDateProject(File[] assets, File[] music, File[] saves, File[] src, File[] scripts, File gameJSONasFile, GameJSON gameJSON, File functionsAsFile, Class<?> functions, File[] otherFiles, File projectDirectory) throws Exception {
+    public JDateProject(File[] assets, File[] music, File[] saves, File[] src, File[] scripts, File gameJSONasFile, GameJSON gameJSON, File functionsAsFile, Class<?> functions, File projectDirectory) throws Exception {
         this.assets = assets;
         this.music = music;
         this.saves = saves;
@@ -54,7 +51,6 @@ public class JDateProject {
         this.gameJSON = gameJSON;
         this.functionsAsFile = functionsAsFile;
         this.functions = functions;
-        this.otherFiles = otherFiles;
         this.projectDirectory = projectDirectory;
 
         if (this.validateFiles().equals(Constants.StatusCodes.FileValidationCodes.FILE_VALIDATION_FAILED)) {
@@ -146,10 +142,6 @@ public class JDateProject {
         return projectName;
     }
 
-    public File[] getOtherFiles() {
-        return otherFiles;
-    }
-
     public File getProjectDirectory() {
         return projectDirectory;
     }
@@ -166,7 +158,6 @@ public class JDateProject {
                 "    gameJSON=" + gameJSON + ",\n" +
                 "    functionsAsFile=" + functionsAsFile + ",\n" +
                 "    functions=" + functions + ",\n" +
-                "    otherFiles=" + Arrays.toString(otherFiles) + ",\n" +
                 "    projectDirectory=" + projectDirectory + ",\n" +
                 "    projectName='" + projectName + '\'' + "\n" +
                 '}';
