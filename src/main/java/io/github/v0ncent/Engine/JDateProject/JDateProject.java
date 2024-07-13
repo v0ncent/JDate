@@ -1,6 +1,7 @@
 package io.github.v0ncent.Engine.JDateProject;
 
 import io.github.v0ncent.Constants;
+import io.github.v0ncent.Exceptions.InvalidProject;
 import io.github.v0ncent.WindowUtil;
 
 import java.io.File;
@@ -29,8 +30,6 @@ public class JDateProject {
 
     private final String projectName;
 
-    private boolean isWorkable;
-
     public JDateProject(File[] assets, File[] music, File[] saves, File[] src, File[] scripts, File gameJSONasFile, GameJSON gameJSON, File functionsAsFile, Class<?> functions, File[] otherFiles, File projectDirectory) throws Exception {
         this.assets = assets;
         this.music = music;
@@ -45,12 +44,10 @@ public class JDateProject {
         this.projectDirectory = projectDirectory;
 
         if (this.validateFiles().equals(Constants.StatusCodes.FileValidationCodes.FILE_VALIDATION_FAILED)) {
-            this.projectName = null;
-            setWorkable(false);
-        } else {
-            this.projectName = this.gameJSON.name();
-            setWorkable(true);
+            throw new InvalidProject("Failed to validate files of JDateProject.");
         }
+
+        this.projectName = gameJSON.name();
     }
 
     private String validateFiles() {
@@ -133,14 +130,6 @@ public class JDateProject {
 
     public File getProjectDirectory() {
         return projectDirectory;
-    }
-
-    public boolean isWorkable() {
-        return isWorkable;
-    }
-
-    public void setWorkable(boolean workable) {
-        isWorkable = workable;
     }
 
     @Override

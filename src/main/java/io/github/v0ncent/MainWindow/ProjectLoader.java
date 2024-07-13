@@ -7,6 +7,7 @@ import io.github.v0ncent.Engine.JDateEngine;
 import io.github.v0ncent.Engine.JDateProject.GameJSON;
 import io.github.v0ncent.Engine.JDateProject.JDateProject;
 import io.github.v0ncent.Engine.Util.JDateProjectUtil;
+import io.github.v0ncent.Exceptions.InvalidProject;
 import io.github.v0ncent.WindowUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -245,11 +246,9 @@ public class ProjectLoader extends JPanel implements ActionListener {
                             )
                     );
 
-                } catch (IOException | ClassNotFoundException e) {
+                } catch (Exception e ) {
                     WindowUtil.showErrorWindow("Error loading project files: " + e.getMessage());
                     e.printStackTrace();
-                } catch (Exception e) {
-
                 }
 
             } else {

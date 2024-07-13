@@ -14,6 +14,7 @@ public class JDateEngine {
     // with a million instances of a game engine. that wouldn't be good.
     private static JDateEngine jDateEngine;
 
+    // this is the project files processed into one nice object, engine things can now happen with this object.
     private JDateProject project;
 
     private JDateEngine() {
