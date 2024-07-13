@@ -1,13 +1,11 @@
 package io.github.v0ncent.MainWindow;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.v0ncent.Constants;
 import io.github.v0ncent.Engine.JDateEngine;
 import io.github.v0ncent.Engine.JDateProject.GameJSON;
 import io.github.v0ncent.Engine.JDateProject.JDateProject;
 import io.github.v0ncent.Engine.Util.JDateProjectUtil;
-import io.github.v0ncent.Exceptions.InvalidProject;
 import io.github.v0ncent.WindowUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,11 +17,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -102,14 +98,10 @@ public class ProjectLoader extends JPanel implements ActionListener {
         private final JDateProjectUtil project = new JDateProjectUtil();
 
         // project files
-        private final File[] files;
-
-        // project files
         private final HashMap<String, Object> projectFiles = new HashMap<>();
 
         public DirectoryLoader(File directory) {
             this.directory = directory;
-            this.files = directory.listFiles();
         }
 
         @Override
@@ -137,7 +129,7 @@ public class ProjectLoader extends JPanel implements ActionListener {
                 for (File file : files) {
                     publish(indent + file.getName());
 
-                    // check if it's a JDate necessary file
+                    // check if it's a JDate necessary file and cache the files to be passed to our engine.
                     switch (file.getName()) {
                         case Constants.FileContent.ASSETS_DIRECTORY_NAME -> {
                             project.setHasAssetsFolder(true);
@@ -187,6 +179,11 @@ public class ProjectLoader extends JPanel implements ActionListener {
             }
         }
 
+        /**
+         * Takes a given Java Functions project file and compiles it to byte code, creates output directory for compiled files if it has
+         * not been created yet.
+         * @param pathToFunctionsFile Path to users Java Functions file.
+         */
         private void compileFunctionsFile(String pathToFunctionsFile) {
             // compile java file via java compiler
             final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
@@ -209,6 +206,14 @@ public class ProjectLoader extends JPanel implements ActionListener {
             }
         }
 
+        /**
+         * Loads the users Java Functions file into a class object.
+         * @param pathToFunctionsFile Path to compiled functions file.
+         * @return The functions file loaded into a class object.
+         * @see Class
+         * @throws MalformedURLException If the passed file path is an invalid url / file path.
+         * @throws ClassNotFoundException If the compiled functions file does not exist.
+         */
         private Class<?> loadClass(String pathToFunctionsFile) throws MalformedURLException, ClassNotFoundException {
             compileFunctionsFile(pathToFunctionsFile);
 
@@ -225,8 +230,6 @@ public class ProjectLoader extends JPanel implements ActionListener {
 
             // at end of subroutine, if it's a valid jdate project, pass to our engine.
             if (project.isJDateProject()) {
-
-                LOGGER.info("Project Structure Map: {}", projectFiles);
 
                 try {
                     JDateEngine.getInstance().acceptFiles(

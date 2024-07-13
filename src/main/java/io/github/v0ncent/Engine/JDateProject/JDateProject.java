@@ -30,6 +30,20 @@ public class JDateProject {
 
     private final String projectName;
 
+    /**
+     * @param assets Contents of Assets Directory.
+     * @param music Contents of Music Directory.
+     * @param saves Contents of Saves Directory.
+     * @param src Contents of src Directory.
+     * @param scripts Contents of Scripts Directory.
+     * @param gameJSONasFile GameJson config file as a File Object.
+     * @param gameJSON An instance of the GameJson Object with parsed json contents.
+     * @param functionsAsFile Java Functions file as a File Object.
+     * @param functions Compiled Functions file as a Class Object.
+     * @param otherFiles Any files that are not a part of the required ones.
+     * @param projectDirectory Pointer to the project directory.
+     * @throws Exception If there are any problems encountered during file compilation.
+     */
     public JDateProject(File[] assets, File[] music, File[] saves, File[] src, File[] scripts, File gameJSONasFile, GameJSON gameJSON, File functionsAsFile, Class<?> functions, File[] otherFiles, File projectDirectory) throws Exception {
         this.assets = assets;
         this.music = music;
@@ -50,6 +64,10 @@ public class JDateProject {
         this.projectName = gameJSON.name();
     }
 
+    /**
+     * Validates user editable files are able to be processed and used by engine.
+     * @return Status code of file validation.
+     */
     private String validateFiles() {
         final String validateGameJsonResult = validateGameJSON();
 
@@ -61,6 +79,10 @@ public class JDateProject {
         return Constants.StatusCodes.FileValidationCodes.FILE_VALIDATION_OK;
     }
 
+    /**
+     * Ensures the GameJson config file has valid entries and is able to be used by engine.
+     * @return Status code of game json validation.
+     */
     private String validateGameJSON() {
         // validate starting script
         // all the cases I can think of.
