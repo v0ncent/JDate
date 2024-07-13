@@ -2,10 +2,8 @@ package io.github.v0ncent.Engine.JDateProject;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.io.File;
-
-public record GameJSON(File startingScript, String name) {
-    public GameJSON(@JsonProperty("starting_script") File startingScript, @JsonProperty("name") String name) {
+public record GameJSON(String startingScript, String name) {
+    public GameJSON(@JsonProperty("starting_script") String startingScript, @JsonProperty("name") String name) {
         this.startingScript = startingScript;
         this.name = name;
     }

@@ -28,6 +28,8 @@ public class JDateProject {
 
     private final String projectName;
 
+    private File startingScript;
+
     /**
      * @param assets Contents of Assets Directory.
      * @param music Contents of Music Directory.
@@ -83,10 +85,8 @@ public class JDateProject {
         // validate starting script
         // all the cases I can think of.
         if (getGameJSON().startingScript() == null ||
-                !getGameJSON().startingScript().isFile() ||
-                !getGameJSON().startingScript().exists() ||
-                getGameJSON().startingScript().isDirectory() ||
-                !getGameJSON().startingScript().getName().endsWith(Constants.FileContent.JDATE_SCRIPT_EXTENSION)
+                !getGameJSON().startingScript().split("\\.")[1].equals("jdate") ||
+                getGameJSON().startingScript().isEmpty()
         ) {
             return Constants.StatusCodes.GameJsonValidationCodes.GAME_JSON_BAD_SCRIPT;
         }
@@ -97,6 +97,15 @@ public class JDateProject {
                 getGameJSON().name().isEmpty()
         ){
             return Constants.StatusCodes.GameJsonValidationCodes.GAME_JSON_BAD_NAME;
+        }
+
+        // check if starting script exists in scripts folder.
+        for (File script : getScripts()) {
+
+            if (script.isFile() && script.getName().equals(getGameJSON().startingScript())) {
+                this.startingScript = script;
+            }
+
         }
 
         return Constants.StatusCodes.GameJsonValidationCodes.GAME_JSON_OK;
@@ -146,6 +155,10 @@ public class JDateProject {
         return projectDirectory;
     }
 
+    public File getStartingScript() {
+        return startingScript;
+    }
+
     @Override
     public String toString() {
         return "JDateProject{\n" +
@@ -160,6 +173,7 @@ public class JDateProject {
                 "    functions=" + functions + ",\n" +
                 "    projectDirectory=" + projectDirectory + ",\n" +
                 "    projectName='" + projectName + '\'' + "\n" +
+                "    startingScript = '" + startingScript + "'\n" +
                 '}';
     }
 }
