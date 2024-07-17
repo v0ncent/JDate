@@ -1,8 +1,13 @@
 package io.github.v0ncent.Engine;
 
 import io.github.v0ncent.Engine.JDateProject.JDateProject;
+import io.github.v0ncent.WindowUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * Singleton Instance of JDateEngine Object.
@@ -14,8 +19,10 @@ public class JDateEngine {
     // with a million instances of a game engine. that wouldn't be good.
     private static JDateEngine jDateEngine;
 
+    public boolean hasProject = false;
+
     // this is the project files processed into one nice object, engine things can now happen with this object.
-    private JDateProject project;
+    private static JDateProject project;
 
     private JDateEngine() {
 
@@ -27,10 +34,13 @@ public class JDateEngine {
      */
     public void acceptFiles(JDateProject project) {
         // populate JDateProject from files passed.
-        this.project = project;
+        JDateEngine.project = project;
+        this.hasProject = true;
 
         LOGGER.info("Engine has accepted project: {}", project.getProjectDirectory());
         LOGGER.info("Engine has accepted files: {}", project);
+
+        this.run();
     }
 
     /**
@@ -42,5 +52,30 @@ public class JDateEngine {
             jDateEngine = new JDateEngine();
         }
         return jDateEngine;
+    }
+
+    public static JDateProject getProject() {
+        return project;
+    }
+
+    private void run() {
+        if (!hasProject) {
+            LOGGER.error("Engine does not currently have a project loaded!");
+        }
+
+        try {
+            JDateInterpreter.getInstance().interpret(project.getStartingScript());
+        } catch (FileNotFoundException e) {
+            LOGGER.error("Cannot find starting script. {}", e.getMessage());
+            e.printStackTrace();
+        } catch (IOException e) {
+            LOGGER.error("ERROR parsing line data of script. {}", e.getMessage());
+            e.printStackTrace();
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            LOGGER.error("ERROR invoking lines of script. {}", e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            WindowUtil.showErrorWindow(e.getMessage());
+        }
     }
 }

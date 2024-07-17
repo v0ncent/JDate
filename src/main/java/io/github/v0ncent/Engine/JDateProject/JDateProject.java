@@ -6,6 +6,7 @@ import io.github.v0ncent.WindowUtil;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -29,6 +30,8 @@ public class JDateProject {
     private final String projectName;
 
     private File startingScript;
+
+    private HashMap<String, File> scriptMap;
 
     /**
      * @param assets Contents of Assets Directory.
@@ -60,6 +63,7 @@ public class JDateProject {
         }
 
         this.projectName = gameJSON.name();
+        this.scriptMap = this.hashScripts();
     }
 
     /**
@@ -115,6 +119,16 @@ public class JDateProject {
         return Constants.StatusCodes.GameJsonValidationCodes.GAME_JSON_OK;
     }
 
+    private HashMap<String, File> hashScripts() {
+        HashMap<String, File> scriptMap = new HashMap<>();
+
+        for (File script : getScripts()) {
+            scriptMap.put(script.getName().replaceAll(Constants.FileContent.JDATE_SCRIPT_EXTENSION, ""), script);
+        }
+
+        return scriptMap;
+    }
+
     public File[] getAssets() {
         return assets;
     }
@@ -161,6 +175,10 @@ public class JDateProject {
 
     public File getStartingScript() {
         return startingScript;
+    }
+
+    public HashMap<String, File> getScriptMap() {
+        return scriptMap;
     }
 
     @Override

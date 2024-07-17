@@ -308,4 +308,10 @@ public class Constants {
     public static final class ProjectLoaderConstants {
         public static final String CHOOSE_BUTTON_TEXT = "Load Project";
     }
+
+    public static final class ScriptKeyWords{
+        public static final String COMMENT = "#";
+        public static final String DELIMINATOR = ">";
+        public static final String ARG_DELIMINATOR = "+";
+    }
 }
