@@ -37,7 +37,6 @@ public final class ScriptFunctions {
             throw new ScriptNotFound(String.format("Cannot find Script: %s", args.getFirst()));
         }
 
-        System.out.println("Running interpreter from go function");
         interpreter.interpret(script);
     }
 
