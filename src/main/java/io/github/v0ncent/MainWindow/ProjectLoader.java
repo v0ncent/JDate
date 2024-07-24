@@ -133,34 +133,78 @@ public class ProjectLoader extends JPanel implements ActionListener {
                     // check if it's a JDate necessary file and cache the files to be passed to our engine.
                     switch (file.getName()) {
                         case Constants.FileContent.ASSETS_DIRECTORY_NAME -> {
+
+                            if (project.isHasAssetsFolder()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setHasAssetsFolder(true);
                             projectFiles.put(Constants.FileContent.ASSETS_DIRECTORY_NAME, file.listFiles());
                         }
                         case Constants.FileContent.MUSIC_DIRECTORY_NAME -> {
+
+                            if (project.isHasMusicFolder()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setHasMusicFolder(true);
                             projectFiles.put(Constants.FileContent.MUSIC_DIRECTORY_NAME, file.listFiles());
                         }
                         case Constants.FileContent.SAVES_DIRECTORY_NAME -> {
+
+                            if (project.isHasSavesFolder()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setHasSavesFolder(true);
                             projectFiles.put(Constants.FileContent.SAVES_DIRECTORY_NAME, file.listFiles());
                         }
                         case Constants.FileContent.SRC_DIRECTORY_NAME -> {
+
+                            if (project.isHasSRCFolder()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setHasSRCFolder(true);
                             projectFiles.put(Constants.FileContent.SRC_DIRECTORY_NAME, file.listFiles());
                         }
                         case Constants.FileContent.SCRIPTS_DIRECTORY_NAME -> {
+
+                            if (project.isSrcFolderHasScriptsFolder()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setSrcFolderHasScriptsFolder(true);
                             projectFiles.put(Constants.FileContent.SCRIPTS_DIRECTORY_NAME, file.listFiles());
                         }
                         case Constants.FileContent.GAME_FILE_NAME -> {
+
+                            if (project.isSrcContainsGameJson()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setSrcContainsGameJson(true);
                             projectFiles.put(Constants.FileContent.GAME_FILE_NAME, file);
                         }
                         case Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME -> {
+
+                            if (project.isSrcContainsFunctionsJavaFile()) {
+                                WindowUtil.showErrorWindow("Multiple JDate project being loaded. Please load only one!");
+                                return;
+                            }
+
                             project.setSrcContainsFunctionsJavaFile(true);
                             projectFiles.put(Constants.FileContent.JAVA_FUNCTIONS_FILE_NAME, file);
                         }
-                        default -> {}
+                        default -> {
+                            // Ignore the Jit
+                        }
                     }
 
                     if (file.isDirectory()) {
