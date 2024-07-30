@@ -6,8 +6,7 @@ import io.github.v0ncent.Exceptions.NoFunctionFound;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class JDateInterpreter {
@@ -41,13 +40,16 @@ public class JDateInterpreter {
             final String[] parsedLine = line.split(Constants.ScriptKeyWords.DELIMINATOR);
 
             final String[] arguments = parsedLine[1].split(Constants.ScriptKeyWords.DELIMINATOR);
-            final ArrayList<String> args = new ArrayList<>();
 
-            Collections.addAll(args, arguments);
+            function = new Function(parsedLine[0], arguments);
 
-            function = new Function(parsedLine[0], args);
-
-            executeLine(function);
+            // temp fix
+            if (parsedLine[0].equals(Constants.ScriptKeyWords.END_OF_FILE_FUNCTION)) {
+                executeLine(function);
+                break;
+            } else {
+                executeLine(function);
+            }
         }
 
         reader.close();
@@ -61,7 +63,7 @@ public class JDateInterpreter {
             throw new NoFunctionFound(String.format("No function of name %s found!", functionNameAndArgs.functionName));
         }
 
-        method.invoke(new ScriptFunctions(), functionNameAndArgs.args);
+        method.invoke(new ScriptFunctions(), (Object) functionNameAndArgs.args);
     }
 
     public static JDateInterpreter getInstance() {
@@ -73,11 +75,16 @@ public class JDateInterpreter {
 
     private static class Function {
         public String functionName;
-        public ArrayList<String> args;
+            public String[] args;
 
-        public Function(String functionName, ArrayList<String> args) {
+        public Function(String functionName, String[] args) {
             this.functionName = functionName;
             this.args = args;
+        }
+
+        @Override
+        public String toString() {
+            return "Function { functionName= " + functionName + "\nparams= " + Arrays.toString(args) + "\n}";
         }
     }
 }

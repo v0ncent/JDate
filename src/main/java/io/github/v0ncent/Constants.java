@@ -313,5 +313,6 @@ public class Constants {
         public static final String COMMENT = "#";
         public static final String DELIMINATOR = ">";
         public static final String ARG_DELIMINATOR = "+";
+        public static final String END_OF_FILE_FUNCTION = "go";
     }
 }

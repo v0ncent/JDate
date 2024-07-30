@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public final class ScriptFunctions {
@@ -25,16 +24,16 @@ public final class ScriptFunctions {
         return methods;
     }
 
-    public void log(ArrayList<String> args) {
-        LOGGER.info(args.getFirst());
+    public void log(String[] args) {
+        LOGGER.info(args[0]);
     }
 
-    public void go(ArrayList<String> args) throws NoFunctionFound, IOException, InvocationTargetException, IllegalAccessException, ScriptNotFound {
+    public void go(String[] args) throws NoFunctionFound, IOException, InvocationTargetException, IllegalAccessException, ScriptNotFound {
         JDateInterpreter interpreter = JDateInterpreter.getInstance();
-        File script = JDateEngine.getProject().getScriptMap().get(args.getFirst());
+        File script = JDateEngine.getProject().getScriptMap().get(args[0]);
 
         if (script == null) {
-            throw new ScriptNotFound(String.format("Cannot find Script: %s", args.getFirst()));
+            throw new ScriptNotFound(String.format("Cannot find Script: %s", args[0]));
         }
 
         interpreter.interpret(script);
