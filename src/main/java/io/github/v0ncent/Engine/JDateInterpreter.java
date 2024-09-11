@@ -1,6 +1,7 @@
 package io.github.v0ncent.Engine;
 
 import io.github.v0ncent.Constants;
+import io.github.v0ncent.Engine.Util.ScriptUtil;
 import io.github.v0ncent.Exceptions.NoFunctionFound;
 
 import java.io.*;
@@ -30,6 +31,7 @@ public class JDateInterpreter {
 
         String line;
         Function function;
+
         while ((line = reader.readLine()) != null) {
             if (line.startsWith(Constants.ScriptKeyWords.COMMENT) || line.isEmpty()) continue;
 
@@ -44,12 +46,13 @@ public class JDateInterpreter {
             function = new Function(parsedLine[0], arguments);
 
             // temp fix
-            if (parsedLine[0].equals(Constants.ScriptKeyWords.END_OF_FILE_FUNCTION)) {
+            if (ScriptUtil.isFileEndingKeyword(parsedLine[0])) {
                 executeLine(function);
                 break;
             } else {
                 executeLine(function);
             }
+
         }
 
         reader.close();
@@ -75,7 +78,7 @@ public class JDateInterpreter {
 
     private static class Function {
         public String functionName;
-            public String[] args;
+        public String[] args;
 
         public Function(String functionName, String[] args) {
             this.functionName = functionName;
@@ -87,4 +90,5 @@ public class JDateInterpreter {
             return "Function { functionName= " + functionName + "\nparams= " + Arrays.toString(args) + "\n}";
         }
     }
+
 }
